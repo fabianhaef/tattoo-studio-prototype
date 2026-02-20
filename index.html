@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alena Lizier — Tattoo Design Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ─── RESET & BASE ─── */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --white: #F8F7F4;
+      --black: #0A0A0A;
+      --grey: #999;
+      --grey-light: #E0DDD8;
+      --grey-mid: #6B6B6B;
+      --accent: #0A0A0A;
+      --font-display: 'Instrument Serif', Georgia, serif;
+      --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+    }
+
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background: var(--white);
+      color: var(--black);
+      font-family: var(--font-mono);
+      font-weight: 300;
+      line-height: 1.6;
+      min-height: 100vh;
+      cursor: default;
+      overflow-x: hidden;
+    }
+
+    ::selection {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    /* ─── LAYOUT ─── */
+    .site-wrapper {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 clamp(24px, 4vw, 80px);
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      padding-top: clamp(40px, 8vh, 100px);
+      padding-bottom: clamp(60px, 12vh, 160px);
+      position: relative;
+    }
+
+    .artist-name {
+      font-family: var(--font-display);
+      font-size: clamp(3.5rem, 10vw, 9rem);
+      font-weight: 400;
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.15em;
+    }
+
+    .artist-name em {
+      font-style: italic;
+      display: inline-block;
+      transform: translateX(0.05em);
+    }
+
+    .studio-label {
+      font-family: var(--font-mono);
+      font-size: clamp(0.65rem, 1vw, 0.8rem);
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--grey);
+      margin-top: 1.5em;
+    }
+
+    .header-line {
+      display: block;
+      width: 100%;
+      height: 1px;
+      background: var(--black);
+      margin-top: clamp(40px, 6vh, 80px);
+      transform-origin: left;
+      animation: lineReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
+    }
+
+    /* ─── INDEX LIST ─── */
+    .index-section {
+      padding-bottom: clamp(80px, 15vh, 200px);
+    }
+
+    .index-header {
+      display: grid;
+      grid-template-columns: 80px 1fr 120px;
+      gap: 20px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--grey-light);
+      margin-bottom: 0;
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--grey);
+    }
+
+    .index-header span:last-child {
+      text-align: right;
+    }
+
+    .project-item {
+      display: grid;
+      grid-template-columns: 80px 1fr 120px;
+      gap: 20px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--grey-light);
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: itemReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .project-item:nth-child(2) { animation-delay: 0.8s; }
+    .project-item:nth-child(3) { animation-delay: 0.9s; }
+    .project-item:nth-child(4) { animation-delay: 1.0s; }
+    .project-item:nth-child(5) { animation-delay: 1.1s; }
+    .project-item:nth-child(6) { animation-delay: 1.2s; }
+    .project-item:nth-child(7) { animation-delay: 1.3s; }
+    .project-item:nth-child(8) { animation-delay: 1.4s; }
+    .project-item:nth-child(9) { animation-delay: 1.5s; }
+
+    .project-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--black);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: -1;
+    }
+
+    .project-item:hover::before {
+      transform: scaleX(1);
+    }
+
+    .project-item:hover {
+      color: var(--white);
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+
+    .project-date {
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: var(--grey-mid);
+      transition: color 0.3s;
+      align-self: center;
+    }
+
+    .project-item:hover .project-date {
+      color: var(--grey);
+    }
+
+    .project-name {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+      font-weight: 400;
+      line-height: 1.2;
+      align-self: center;
+    }
+
+    .project-count {
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: var(--grey-mid);
+      text-align: right;
+      transition: color 0.3s;
+      align-self: center;
+    }
+
+    .project-item:hover .project-count {
+      color: var(--grey);
+    }
+
+    /* ─── LIGHTBOX ─── */
+    .lightbox-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 10, 10, 0.95);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .lightbox-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .lightbox-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px clamp(24px, 4vw, 80px);
+      color: var(--white);
+    }
+
+    .lightbox-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 3vw, 2rem);
+    }
+
+    .lightbox-close {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--grey);
+      background: none;
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .lightbox-close:hover {
+      color: var(--white);
+      border-color: var(--white);
+    }
+
+    .lightbox-body {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 clamp(24px, 4vw, 80px) 60px;
+      position: relative;
+    }
+
+    .lightbox-image-wrapper {
+      max-width: 900px;
+      width: 100%;
+      position: relative;
+    }
+
+    .lightbox-image {
+      width: 100%;
+      height: auto;
+      max-height: 70vh;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+      border-radius: 2px;
+    }
+
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--white);
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 1.2rem;
+      transition: all 0.3s;
+    }
+
+    .lightbox-nav:hover {
+      background: var(--white);
+      color: var(--black);
+    }
+
+    .lightbox-prev { left: -70px; }
+    .lightbox-next { right: -70px; }
+
+    .lightbox-counter {
+      text-align: center;
+      color: var(--grey);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      margin-top: 20px;
+    }
+
+    /* ─── TATTOO MODE ─── */
+    .tattoo-toggle {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      z-index: 900;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      padding: 14px 24px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+
+    .tattoo-toggle:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+    }
+
+    .tattoo-toggle.active {
+      background: var(--white);
+      color: var(--black);
+      border: 1px solid var(--black);
+    }
+
+    .tattoo-toggle .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #4ADE80;
+      transition: background 0.3s;
+    }
+
+    .tattoo-toggle.active .dot {
+      background: #EF4444;
+      animation: pulse 1.5s infinite;
+    }
+
+    .tattoo-controls {
+      position: fixed;
+      bottom: 32px;
+      right: 220px;
+      z-index: 900;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      opacity: 0;
+      transform: translateX(20px);
+      pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .tattoo-controls.visible {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: all;
+    }
+
+    .color-picker-wrapper {
+      position: relative;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid var(--black);
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .color-picker-wrapper input[type="color"] {
+      position: absolute;
+      width: 150%;
+      height: 150%;
+      top: -25%;
+      left: -25%;
+      border: none;
+      cursor: pointer;
+    }
+
+    .stroke-size {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      padding: 8px 16px;
+      border: 1px solid var(--grey-light);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .stroke-size label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--grey);
+    }
+
+    .stroke-size input[type="range"] {
+      width: 60px;
+      accent-color: var(--black);
+    }
+
+    .clear-canvas-btn {
+      background: white;
+      border: 1px solid var(--grey-light);
+      padding: 8px 16px;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--grey-mid);
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .clear-canvas-btn:hover {
+      color: var(--black);
+      border-color: var(--black);
+    }
+
+    /* Drawing canvas */
+    #tattoo-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 800;
+      pointer-events: none;
+      cursor: crosshair;
+      mix-blend-mode: multiply;
+    }
+
+    #tattoo-canvas.active {
+      pointer-events: all;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--black);
+      padding: 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.7rem;
+      color: var(--grey);
+      letter-spacing: 0.05em;
+      margin-bottom: 100px;
+    }
+
+    footer a {
+      color: var(--grey-mid);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    footer a:hover {
+      color: var(--black);
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes lineReveal {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+
+    @keyframes itemReveal {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+    }
+
+    .fade-in-delay {
+      opacity: 0;
+      animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .index-header,
+      .project-item {
+        grid-template-columns: 60px 1fr 60px;
+        gap: 12px;
+      }
+
+      .lightbox-prev { left: 10px; }
+      .lightbox-next { right: 10px; }
+
+      .tattoo-controls {
+        bottom: 90px;
+        right: 32px;
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── DRAWING CANVAS ─── -->
+  <canvas id="tattoo-canvas"></canvas>
+
+  <!-- ─── MAIN CONTENT ─── -->
+  <div class="site-wrapper">
+
+    <header>
+      <h1 class="artist-name fade-in">Alena<br><em>Lizier</em></h1>
+      <p class="studio-label fade-in-delay">Tattoo Design Studio</p>
+      <span class="header-line"></span>
+    </header>
+
+    <section class="index-section">
+      <div class="index-header">
+        <span>Date</span>
+        <span>Project</span>
+        <span>Images</span>
+      </div>
+
+      <div class="project-list" id="project-list">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <footer>
+      <span>&copy; 2026 Alena Lizier</span>
+      <a href="mailto:studio@alenalizier.com">studio@alenalizier.com</a>
+    </footer>
+
+  </div>
+
+  <!-- ─── LIGHTBOX ─── -->
+  <div class="lightbox-overlay" id="lightbox">
+    <div class="lightbox-header">
+      <span class="lightbox-title" id="lightbox-title"></span>
+      <button class="lightbox-close" id="lightbox-close">Close &times;</button>
+    </div>
+    <div class="lightbox-body">
+      <button class="lightbox-nav lightbox-prev" id="lightbox-prev">&larr;</button>
+      <div class="lightbox-image-wrapper">
+        <img class="lightbox-image" id="lightbox-image" src="" alt="">
+        <p class="lightbox-counter" id="lightbox-counter"></p>
+      </div>
+      <button class="lightbox-nav lightbox-next" id="lightbox-next">&rarr;</button>
+    </div>
+  </div>
+
+  <!-- ─── TATTOO CONTROLS ─── -->
+  <div class="tattoo-controls" id="tattoo-controls">
+    <div class="color-picker-wrapper">
+      <input type="color" id="ink-color" value="#0A0A0A" title="Ink color">
+    </div>
+    <div class="stroke-size">
+      <label>Size</label>
+      <input type="range" id="stroke-size" min="0.5" max="6" step="0.5" value="1.5">
+    </div>
+    <button class="clear-canvas-btn" id="clear-canvas">Clear</button>
+  </div>
+
+  <button class="tattoo-toggle" id="tattoo-toggle">
+    <span class="dot"></span>
+    Tattoo
+  </button>
+
+  <script>
+    // ─── PROJECT DATA ─── //
+    const projects = [
+      {
+        date: '2026.01',
+        name: 'Serpentine Bloom',
+        images: [
+          'https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=800&q=80',
+          'https://images.unsplash.com/photo-1590246815117-0b8925b6860e?w=800&q=80',
+          'https://images.unsplash.com/photo-1562962230-16e4623d36e6?w=800&q=80',
+        ]
+      },
+      {
+        date: '2025.11',
+        name: 'Meridian Lines',
+        images: [
+          'https://images.unsplash.com/photo-1598371839696-5c5bb1d9243c?w=800&q=80',
+          'https://images.unsplash.com/photo-1565058379802-bbe93b2f703a?w=800&q=80',
+        ]
+      },
+      {
+        date: '2025.09',
+        name: 'Ossuary Studies',
+        images: [
+          'https://images.unsplash.com/photo-1568515045052-f9a854d70bfd?w=800&q=80',
+          'https://images.unsplash.com/photo-1590246814883-57c511e9e6f0?w=800&q=80',
+          'https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?w=800&q=80',
+          'https://images.unsplash.com/photo-1509281373149-e957c6296406?w=800&q=80',
+        ]
+      },
+      {
+        date: '2025.07',
+        name: 'Tidal Geometry',
+        images: [
+          'https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=800&q=80',
+          'https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=800&q=80',
+        ]
+      },
+      {
+        date: '2025.04',
+        name: 'Phantom Limbs',
+        images: [
+          'https://images.unsplash.com/photo-1578301978018-3005759f48f7?w=800&q=80',
+          'https://images.unsplash.com/photo-1549490349-8643362247b5?w=800&q=80',
+          'https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?w=800&q=80',
+        ]
+      },
+      {
+        date: '2025.02',
+        name: 'Nocturne in Skin',
+        images: [
+          'https://images.unsplash.com/photo-1617791160505-6f00504e3519?w=800&q=80',
+        ]
+      },
+      {
+        date: '2024.12',
+        name: 'Cartography of Scars',
+        images: [
+          'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800&q=80',
+          'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&q=80',
+          'https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=800&q=80',
+          'https://images.unsplash.com/photo-1482160549825-59d1b23cb208?w=800&q=80',
+          'https://images.unsplash.com/photo-1518640467707-6811f4a6ab73?w=800&q=80',
+        ]
+      },
+      {
+        date: '2024.09',
+        name: 'Vessel & Vine',
+        images: [
+          'https://images.unsplash.com/photo-1574169208507-84376144848b?w=800&q=80',
+          'https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=800&q=80',
+          'https://images.unsplash.com/photo-1553949345-eb786bb3f7ba?w=800&q=80',
+        ]
+      },
+    ];
+
+    // ─── RENDER PROJECT LIST ─── //
+    const projectList = document.getElementById('project-list');
+
+    projects.forEach((project, index) => {
+      const item = document.createElement('div');
+      item.className = 'project-item';
+      item.dataset.index = index;
+      item.innerHTML = `
+        <span class="project-date">${project.date}</span>
+        <span class="project-name">${project.name}</span>
+        <span class="project-count">${project.images.length} img${project.images.length !== 1 ? 's' : ''}</span>
+      `;
+      item.addEventListener('click', () => openLightbox(index, 0));
+      projectList.appendChild(item);
+    });
+
+    // ─── LIGHTBOX ─── //
+    const lightbox = document.getElementById('lightbox');
+    const lightboxTitle = document.getElementById('lightbox-title');
+    const lightboxImage = document.getElementById('lightbox-image');
+    const lightboxCounter = document.getElementById('lightbox-counter');
+    const lightboxClose = document.getElementById('lightbox-close');
+    const lightboxPrev = document.getElementById('lightbox-prev');
+    const lightboxNext = document.getElementById('lightbox-next');
+
+    let currentProject = 0;
+    let currentImage = 0;
+
+    function openLightbox(projectIdx, imageIdx) {
+      currentProject = projectIdx;
+      currentImage = imageIdx;
+      updateLightbox();
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function updateLightbox() {
+      const project = projects[currentProject];
+      lightboxTitle.textContent = project.name;
+      lightboxImage.src = project.images[currentImage];
+      lightboxImage.alt = `${project.name} — ${currentImage + 1}`;
+      lightboxCounter.textContent = `${currentImage + 1} / ${project.images.length}`;
+      lightboxPrev.style.visibility = currentImage > 0 ? 'visible' : 'hidden';
+      lightboxNext.style.visibility = currentImage < project.images.length - 1 ? 'visible' : 'hidden';
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightboxPrev.addEventListener('click', () => {
+      if (currentImage > 0) { currentImage--; updateLightbox(); }
+    });
+    lightboxNext.addEventListener('click', () => {
+      if (currentImage < projects[currentProject].images.length - 1) { currentImage++; updateLightbox(); }
+    });
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft' && currentImage > 0) { currentImage--; updateLightbox(); }
+      if (e.key === 'ArrowRight' && currentImage < projects[currentProject].images.length - 1) { currentImage++; updateLightbox(); }
+    });
+
+    // ─── TATTOO MODE (Canvas Drawing) ─── //
+    const canvas = document.getElementById('tattoo-canvas');
+    const ctx = canvas.getContext('2d');
+    const toggleBtn = document.getElementById('tattoo-toggle');
+    const controls = document.getElementById('tattoo-controls');
+    const colorPicker = document.getElementById('ink-color');
+    const sizeSlider = document.getElementById('stroke-size');
+    const clearBtn = document.getElementById('clear-canvas');
+
+    let tattooMode = false;
+    let isDrawing = false;
+    let lastX = 0;
+    let lastY = 0;
+    let lastTime = 0;
+
+    function resizeCanvas() {
+      // Preserve drawing when resizing
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      ctx.putImageData(imageData, 0, 0);
+    }
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    toggleBtn.addEventListener('click', () => {
+      tattooMode = !tattooMode;
+      canvas.classList.toggle('active', tattooMode);
+      toggleBtn.classList.toggle('active', tattooMode);
+      controls.classList.toggle('visible', tattooMode);
+      toggleBtn.querySelector('.dot');
+    });
+
+    function getStrokeWidth(e) {
+      const baseSize = parseFloat(sizeSlider.value);
+      // Simulate pressure with speed
+      const now = Date.now();
+      const dt = now - lastTime;
+      const dx = e.clientX - lastX;
+      const dy = e.clientY - lastY;
+      const speed = Math.sqrt(dx * dx + dy * dy) / Math.max(dt, 1);
+      const pressure = Math.max(0.3, 1 - Math.min(speed / 8, 0.7));
+      return baseSize * pressure;
+    }
+
+    function startDrawing(e) {
+      if (!tattooMode) return;
+      isDrawing = true;
+      lastX = e.clientX;
+      lastY = e.clientY;
+      lastTime = Date.now();
+
+      ctx.beginPath();
+      ctx.arc(e.clientX, e.clientY, parseFloat(sizeSlider.value) * 0.4, 0, Math.PI * 2);
+      ctx.fillStyle = colorPicker.value;
+      ctx.fill();
+    }
+
+    function draw(e) {
+      if (!isDrawing || !tattooMode) return;
+
+      const strokeWidth = getStrokeWidth(e);
+
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(e.clientX, e.clientY);
+      ctx.strokeStyle = colorPicker.value;
+      ctx.lineWidth = strokeWidth;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+
+      lastX = e.clientX;
+      lastY = e.clientY;
+      lastTime = Date.now();
+    }
+
+    function stopDrawing() {
+      isDrawing = false;
+    }
+
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mouseleave', stopDrawing);
+
+    // Touch support
+    canvas.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      const touch = e.touches[0];
+      startDrawing({ clientX: touch.clientX, clientY: touch.clientY });
+    });
+    canvas.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      const touch = e.touches[0];
+      draw({ clientX: touch.clientX, clientY: touch.clientY });
+    });
+    canvas.addEventListener('touchend', stopDrawing);
+
+    clearBtn.addEventListener('click', () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+  </script>
+
+</body>
+</html>
