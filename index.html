@@ -127,7 +127,7 @@
       padding: 18px 0;
       border-bottom: 1px solid var(--grey-light);
       cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: background 0.25s ease, padding 0.25s ease;
       position: relative;
       text-decoration: none;
       color: inherit;
@@ -145,23 +145,8 @@
     .project-item:nth-child(8) { animation-delay: 1.4s; }
     .project-item:nth-child(9) { animation-delay: 1.5s; }
 
-    .project-item::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--black);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-      z-index: -1;
-    }
-
-    .project-item:hover::before {
-      transform: scaleX(1);
-    }
-
     .project-item:hover {
-      color: var(--white);
+      background: #E9FF70;
       padding-left: 12px;
       padding-right: 12px;
     }
@@ -175,7 +160,7 @@
     }
 
     .project-item:hover .project-date {
-      color: var(--grey);
+      color: var(--black);
     }
 
     .project-name {
@@ -196,7 +181,7 @@
     }
 
     .project-item:hover .project-count {
-      color: var(--grey);
+      color: var(--black);
     }
 
     /* ─── LIGHTBOX ─── */
@@ -315,49 +300,119 @@
       z-index: 900;
       display: flex;
       align-items: center;
-      gap: 12px;
-      background: var(--black);
-      color: var(--white);
+      gap: 10px;
+      background: none;
+      color: var(--black);
       border: none;
-      padding: 14px 24px;
+      padding: 16px 26px;
       font-family: var(--font-mono);
       font-size: 0.7rem;
-      font-weight: 400;
+      font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.2em;
       cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      transition: all 0.3s ease;
     }
 
-    .tattoo-toggle:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+    .tattoo-toggle svg.hand-drawn-border {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .tattoo-toggle svg.hand-drawn-border rect {
+      fill: none;
+      stroke: var(--black);
+      stroke-width: 1.5;
+      stroke-dasharray: 400;
+      stroke-dashoffset: 0;
+      rx: 3;
+      ry: 3;
+      transition: stroke 0.3s;
+    }
+
+    .tattoo-toggle:hover svg.hand-drawn-border rect {
+      animation: borderSketch 0.6s ease forwards;
+    }
+
+    .tattoo-toggle .needle-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      transition: transform 0.3s ease;
+    }
+
+    .tattoo-toggle:hover .needle-icon {
+      transform: translateY(-1px) rotate(-8deg);
     }
 
     .tattoo-toggle.active {
-      background: var(--white);
-      color: var(--black);
-      border: 1px solid var(--black);
+      color: var(--white);
     }
 
-    .tattoo-toggle .dot {
-      width: 8px;
-      height: 8px;
+    .tattoo-toggle.active svg.hand-drawn-border rect {
+      fill: var(--black);
+      stroke: var(--black);
+    }
+
+    .tattoo-toggle.active .needle-icon path,
+    .tattoo-toggle.active .needle-icon line,
+    .tattoo-toggle.active .needle-icon circle {
+      stroke: var(--white);
+    }
+
+    .tattoo-toggle.active:hover .needle-icon {
+      animation: needleBuzz 0.15s linear infinite;
+    }
+
+    /* Ink splatter on hover */
+    .tattoo-toggle .ink-splatter {
+      position: absolute;
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
-      background: #4ADE80;
-      transition: background 0.3s;
+      background: var(--black);
+      opacity: 0;
+      pointer-events: none;
     }
 
-    .tattoo-toggle.active .dot {
-      background: #EF4444;
-      animation: pulse 1.5s infinite;
+    .tattoo-toggle:hover .ink-splatter {
+      animation: splatAppear 0.4s ease forwards;
+    }
+
+    .tattoo-toggle .ink-splatter:nth-child(1) { top: -4px; right: 20px; animation-delay: 0.05s; }
+    .tattoo-toggle .ink-splatter:nth-child(2) { bottom: -3px; left: 15px; width: 4px; height: 4px; animation-delay: 0.15s; }
+    .tattoo-toggle .ink-splatter:nth-child(3) { top: 6px; left: -3px; width: 3px; height: 3px; animation-delay: 0.1s; }
+
+    .tattoo-toggle:hover .ink-splatter:nth-child(1) { animation: splatAppear 0.4s 0.05s ease forwards; }
+    .tattoo-toggle:hover .ink-splatter:nth-child(2) { animation: splatAppear 0.4s 0.15s ease forwards; }
+    .tattoo-toggle:hover .ink-splatter:nth-child(3) { animation: splatAppear 0.4s 0.1s ease forwards; }
+
+    @keyframes splatAppear {
+      0% { opacity: 0; transform: scale(0); }
+      60% { opacity: 1; transform: scale(1.4); }
+      100% { opacity: 0.7; transform: scale(1); }
+    }
+
+    @keyframes needleBuzz {
+      0%, 100% { transform: translate(0, -1px) rotate(-8deg); }
+      25% { transform: translate(0.5px, -1.5px) rotate(-7deg); }
+      50% { transform: translate(-0.5px, -0.5px) rotate(-9deg); }
+      75% { transform: translate(0.3px, -1.2px) rotate(-8deg); }
+    }
+
+    @keyframes borderSketch {
+      0% { stroke-dashoffset: 0; }
+      50% { stroke-dashoffset: 15; }
+      100% { stroke-dashoffset: 0; }
     }
 
     .tattoo-controls {
       position: fixed;
       bottom: 32px;
-      right: 220px;
+      right: 200px;
       z-index: 900;
       display: flex;
       align-items: center;
@@ -586,7 +641,19 @@
   </div>
 
   <button class="tattoo-toggle" id="tattoo-toggle">
-    <span class="dot"></span>
+    <svg class="hand-drawn-border" viewBox="0 0 100 100" preserveAspectRatio="none"><rect x="2" y="2" width="96" height="96" pathLength="400" vector-effect="non-scaling-stroke"/></svg>
+    <span class="ink-splatter"></span>
+    <span class="ink-splatter"></span>
+    <span class="ink-splatter"></span>
+    <svg class="needle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <!-- Tattoo needle -->
+      <line x1="4" y1="20" x2="14" y2="10"/>
+      <line x1="14" y1="10" x2="20" y2="4"/>
+      <circle cx="20" cy="4" r="1.5"/>
+      <!-- Ink drops -->
+      <circle cx="3" cy="21" r="0.8" fill="currentColor" stroke="none"/>
+      <circle cx="5.5" cy="21.5" r="0.5" fill="currentColor" stroke="none"/>
+    </svg>
     Tattoo
   </button>
 
@@ -767,7 +834,7 @@
       canvas.classList.toggle('active', tattooMode);
       toggleBtn.classList.toggle('active', tattooMode);
       controls.classList.toggle('visible', tattooMode);
-      toggleBtn.querySelector('.dot');
+      // Toggle active state
     });
 
     function getStrokeWidth(e) {
