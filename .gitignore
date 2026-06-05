@@ -1,0 +1,16 @@
+# Playwright / browser tooling
+.playwright-mcp/
+playwright-report/
+test-results/
+blob-report/
+playwright/.cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*~

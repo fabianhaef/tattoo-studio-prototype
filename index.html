@@ -46,7 +46,7 @@
       --font-display: 'Lovepotion', 'Fraunces', Georgia, serif;
       --font-ui: 'Barlow Condensed', 'Helvetica Neue', sans-serif;
       --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-      --section-pad: clamp(72px, 14vh, 160px);
+      --section-pad: clamp(36px, 5vh, 64px);
     }
 
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -55,6 +55,11 @@
       font-size: 16px;
       scroll-behavior: smooth;
       -webkit-font-smoothing: antialiased;
+    }
+
+    html.no-motion .reveal {
+      opacity: 1;
+      transform: none;
     }
 
     body {
@@ -175,10 +180,14 @@
       padding: clamp(48px, 8vw, 120px);
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.5s var(--ease-out);
+      visibility: hidden;
     }
 
-    .menu-overlay.is-open { opacity: 1; pointer-events: all; }
+    html.no-motion .menu-overlay.is-open {
+      opacity: 1;
+      pointer-events: all;
+      visibility: visible;
+    }
 
     .menu-overlay__num {
       position: absolute;
@@ -256,12 +265,11 @@
 
     /* ─── HERO (V&A Waterfront / Odd Ritual) ─── */
     .hero {
-      min-height: 100svh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: clamp(100px, 16vh, 140px) clamp(24px, 5vw, 64px) clamp(48px, 8vh, 80px);
+      gap: clamp(10px, 1.6vh, 16px);
+      padding: clamp(88px, 11vh, 108px) clamp(24px, 5vw, 64px) clamp(20px, 3vh, 32px);
       text-align: center;
       position: relative;
     }
@@ -271,14 +279,14 @@
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--muted);
-      margin-bottom: clamp(32px, 5vh, 56px);
+      margin-bottom: 0;
     }
 
     .hero__carousel {
       position: relative;
-      width: min(78vw, 420px);
+      width: min(64vw, 280px);
       aspect-ratio: 1;
-      margin-bottom: clamp(36px, 6vh, 56px);
+      margin-bottom: 0;
     }
 
     .hero__blob {
@@ -307,10 +315,10 @@
       position: absolute;
       inset: 0;
       opacity: 0;
-      transition: opacity 0.9s var(--ease-out);
+      will-change: opacity, transform;
     }
 
-    .hero__slide.is-active { opacity: 1; }
+    html.no-motion .hero__slide.is-active { opacity: 1; }
 
     .hero__slide img {
       width: 100%;
@@ -337,7 +345,7 @@
       align-items: center;
       justify-content: center;
       gap: clamp(24px, 5vw, 48px);
-      margin-top: 20px;
+      margin-top: 4px;
     }
 
     .hero__arrow {
@@ -383,7 +391,7 @@
       font-weight: 300;
       font-style: italic;
       color: var(--ink-soft);
-      margin-bottom: 1.2em;
+      margin-bottom: 0.35em;
     }
 
     .hero__services {
@@ -391,7 +399,15 @@
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--muted);
-      margin-bottom: 2em;
+      margin-bottom: 0.5em;
+    }
+
+    .hero__actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(14px, 2.5vh, 22px);
+      margin-top: 0;
     }
 
     .hero__cta {
@@ -408,10 +424,6 @@
     .hero__cta:hover { background: var(--ink); color: var(--cream); }
 
     .hero__scroll {
-      position: absolute;
-      bottom: clamp(24px, 4vh, 48px);
-      left: 50%;
-      transform: translateX(-50%);
       font-size: 0.65rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
@@ -431,8 +443,8 @@
     }
 
     @keyframes scrollPulse {
-      0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
-      50% { opacity: 1; transform: translateX(-50%) translateY(4px); }
+      0%, 100% { opacity: 0.5; transform: translateY(0); }
+      50% { opacity: 1; transform: translateY(4px); }
     }
 
     /* ─── SECTIONS (Odd Ritual numbering) ─── */
@@ -442,11 +454,15 @@
       margin: 0 auto;
     }
 
+    #arbeiten {
+      padding-top: clamp(16px, 2.5vh, 28px);
+    }
+
     .section-head {
       display: flex;
       align-items: baseline;
       gap: clamp(16px, 3vw, 32px);
-      margin-bottom: clamp(40px, 7vh, 72px);
+      margin-bottom: clamp(20px, 3vh, 36px);
     }
 
     .section-num {
@@ -472,16 +488,9 @@
       margin-top: 0.4em;
     }
 
-    /* Reveal */
+    /* Reveal — animated by GSAP ScrollTrigger */
     .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
-    }
-
-    .reveal.is-visible {
-      opacity: 1;
-      transform: translateY(0);
+      will-change: opacity, transform;
     }
 
     /* ─── ABOUT (Meech213) ─── */
@@ -604,20 +613,14 @@
       position: absolute;
       right: clamp(16px, 4vw, 48px);
       top: 50%;
-      transform: translateY(-50%) scale(0.92);
       width: clamp(100px, 14vw, 160px);
       aspect-ratio: 3/4;
       border-radius: 38% 62% 55% 45% / 52% 42% 58% 48%;
       overflow: hidden;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.45s var(--ease-out), transform 0.45s var(--ease-out);
       box-shadow: 0 20px 50px rgba(28, 36, 48, 0.12);
-    }
-
-    .work-item:hover .work-item__preview {
-      opacity: 1;
-      transform: translateY(-50%) scale(1);
+      will-change: opacity, transform;
     }
 
     .work-item__preview img {
@@ -749,10 +752,14 @@
       flex-direction: column;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.45s var(--ease-out);
+      visibility: hidden;
     }
 
-    .lightbox.is-open { opacity: 1; pointer-events: all; }
+    html.no-motion .lightbox.is-open {
+      opacity: 1;
+      pointer-events: all;
+      visibility: visible;
+    }
 
     .lightbox__head {
       display: flex;
@@ -854,7 +861,7 @@
 
     @media (max-width: 600px) {
       .menu-footer { flex-direction: column; gap: 12px; }
-      .hero__carousel { width: min(88vw, 360px); }
+      .hero__carousel { width: min(72vw, 280px); }
     }
   </style>
 </head>
@@ -862,24 +869,32 @@
 
   <svg width="0" height="0" aria-hidden="true">
     <defs>
-      <symbol id="ginkgo-leaf" viewBox="0 0 100 120">
-        <path fill="currentColor" d="M50 6 C36 20 32 38 36 54 C24 62 16 78 18 94 C20 106 34 114 50 116 C66 114 80 106 82 94 C84 78 76 62 64 54 C68 38 64 20 50 6 Z"/>
-        <path fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" d="M50 116 L50 62 M50 62 C40 54 34 42 32 30 M50 62 C60 54 66 42 68 30 M50 62 C44 74 40 86 38 98 M50 62 C56 74 60 86 62 98"/>
+      <symbol id="ginkgo-leaf" viewBox="0 0 100 148">
+        <path fill="currentColor" fill-rule="evenodd" d="M49 146 L47 120 C18 112 4 86 6 58 C8 30 28 8 50 4 C72 8 92 30 94 58 C96 86 82 112 53 120 L51 146 Z M50 14 C47 14 45 18 45 22 C45 26 47 30 50 31 C53 30 55 26 55 22 C55 18 53 14 50 14 Z"/>
+        <g fill="none" stroke="currentColor" stroke-width="0.75" stroke-linecap="round" opacity="0.32">
+          <path d="M50 118V52"/>
+          <path d="M50 118C36 98 24 78 20 54"/>
+          <path d="M50 118C64 98 76 78 80 54"/>
+          <path d="M50 118C40 92 34 66 32 40"/>
+          <path d="M50 118C60 92 66 66 68 40"/>
+          <path d="M50 118C44 78 42 48 44 24"/>
+          <path d="M50 118C56 78 58 48 56 24"/>
+        </g>
       </symbol>
     </defs>
   </svg>
 
   <!-- Ginkgo watermark leaves -->
-  <svg class="ginkgo-float ginkgo-float--1 ginkgo-icon" viewBox="0 0 100 120" aria-hidden="true"><use href="#ginkgo-leaf"/></svg>
-  <svg class="ginkgo-float ginkgo-float--2 ginkgo-icon" viewBox="0 0 100 120" aria-hidden="true"><use href="#ginkgo-leaf"/></svg>
-  <svg class="ginkgo-float ginkgo-float--3 ginkgo-icon" viewBox="0 0 100 120" aria-hidden="true"><use href="#ginkgo-leaf"/></svg>
+  <svg class="ginkgo-float ginkgo-float--1 ginkgo-icon" viewBox="0 0 100 148" aria-hidden="true"><use href="#ginkgo-leaf"/></svg>
+  <svg class="ginkgo-float ginkgo-float--2 ginkgo-icon" viewBox="0 0 100 148" aria-hidden="true"><use href="#ginkgo-leaf"/></svg>
+  <svg class="ginkgo-float ginkgo-float--3 ginkgo-icon" viewBox="0 0 100 148" aria-hidden="true"><use href="#ginkgo-leaf"/></svg>
 
   <div class="page">
 
     <!-- NAV -->
     <nav class="nav">
       <a href="#" class="nav-logo">
-        <svg class="ginkgo-icon" viewBox="0 0 100 120" aria-hidden="true"><use href="#ginkgo-leaf"/></svg>
+        <svg class="ginkgo-icon" viewBox="0 0 100 148" aria-hidden="true"><use href="#ginkgo-leaf"/></svg>
         <span>Alena Lizier</span>
       </a>
       <button type="button" class="nav-menu-btn" id="menu-btn" aria-label="Menü öffnen" aria-expanded="false">
@@ -910,7 +925,7 @@
         <div class="hero__blob" aria-hidden="true"></div>
         <div class="hero__slides">
           <div class="hero__slide hero__slide-ginkgo is-active" data-slide="0">
-            <svg class="ginkgo-icon" viewBox="0 0 100 120" aria-hidden="true"><use href="#ginkgo-leaf"/></svg>
+            <svg class="ginkgo-icon" viewBox="0 0 100 148" aria-hidden="true"><use href="#ginkgo-leaf"/></svg>
           </div>
           <div class="hero__slide" data-slide="1">
             <img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=800&q=80" alt="Permanent Make-up — Platzhalter">
@@ -931,15 +946,29 @@
       <h1 class="hero__title">Alena Lizier</h1>
       <p class="hero__subtitle">Tattoo &amp; Art</p>
       <p class="hero__services">Permanent Make-up · Fine Line Tattoo</p>
-      <a href="#arbeiten" class="hero__cta">Entdecken</a>
-
-      <p class="hero__scroll" aria-hidden="true">Scroll</p>
+      <div class="hero__actions">
+        <a href="#arbeiten" class="hero__cta">Entdecken</a>
+        <p class="hero__scroll" aria-hidden="true">Scroll</p>
+      </div>
     </section>
 
-    <!-- 02 ÜBER MICH -->
-    <section class="section" id="ueber-mich">
+    <!-- 02 ARBEITEN -->
+    <section class="section" id="arbeiten">
       <div class="section-head reveal">
         <span class="section-num">02</span>
+        <div>
+          <h2 class="section-title">Arbeiten</h2>
+          <p class="section-kicker">Permanent Make-up &amp; Tattoo — gleichwertig, gleich präzise</p>
+        </div>
+      </div>
+
+      <ul class="work-list" id="work-list"></ul>
+    </section>
+
+    <!-- 03 ÜBER MICH -->
+    <section class="section" id="ueber-mich">
+      <div class="section-head reveal">
+        <span class="section-num">03</span>
         <div>
           <h2 class="section-title">Über mich</h2>
           <p class="section-kicker">Präzision mit Herz</p>
@@ -951,31 +980,18 @@
           <div class="about-portrait__frame">
             <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&q=80" alt="Alena Lizier — Portrait (Platzhalter)">
           </div>
-          <svg class="about-portrait__ginkgo ginkgo-icon" viewBox="0 0 100 120" aria-hidden="true"><use href="#ginkgo-leaf"/></svg>
+          <svg class="about-portrait__ginkgo ginkgo-icon" viewBox="0 0 100 148" aria-hidden="true"><use href="#ginkgo-leaf"/></svg>
         </div>
         <div class="about-text">
           <p>Schon früh habe ich in jedem Detail nach Klarheit gesucht — heute fließt das in meine Arbeit als diplomierte Dermapigmentologin.</p>
           <p>Jede Behandlung beginnt mit einer ruhigen Beratung: Wir schauen gemeinsam, was zu Ihren Gesichtszügen passt — ob Permanent Make-up oder Fine Line Tattoo. Beides mit derselben Sorgfalt, derselben Präzision.</p>
           <p>Perfektion bedeutet für mich nicht Kälte, sondern Verlässlichkeit: klare Linien, harmonische Farben, ein Ergebnis, das sich natürlich anfühlt.</p>
           <div class="about-badge">
-            <svg class="ginkgo-icon" viewBox="0 0 100 120" aria-hidden="true"><use href="#ginkgo-leaf"/></svg>
+            <svg class="ginkgo-icon" viewBox="0 0 100 148" aria-hidden="true"><use href="#ginkgo-leaf"/></svg>
             Diplomierte Dermapigmentologin
           </div>
         </div>
       </div>
-    </section>
-
-    <!-- 03 ARBEITEN -->
-    <section class="section" id="arbeiten">
-      <div class="section-head reveal">
-        <span class="section-num">03</span>
-        <div>
-          <h2 class="section-title">Arbeiten</h2>
-          <p class="section-kicker">Permanent Make-up &amp; Tattoo — gleichwertig, gleich präzise</p>
-        </div>
-      </div>
-
-      <ul class="work-list reveal" id="work-list"></ul>
     </section>
 
     <!-- 04 STUDIO -->
@@ -992,7 +1008,7 @@
         <div class="studio-visual">
           <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=900&q=80" alt="Ginkgo-Bäume — Platzhalter bis echte Fotos da sind">
           <div class="studio-visual__overlay" aria-hidden="true"></div>
-          <svg class="studio-visual__ginkgo ginkgo-icon" viewBox="0 0 100 120" aria-hidden="true"><use href="#ginkgo-leaf"/></svg>
+          <svg class="studio-visual__ginkgo ginkgo-icon" viewBox="0 0 100 148" aria-hidden="true"><use href="#ginkgo-leaf"/></svg>
         </div>
         <div class="studio-text">
           <p>Vor meinem Studio stehen zwei Ginkgos — einer der ältesten Bäume der Welt. Sie stehen für Beständigkeit, Klarheit und Ruhe. Genau damit arbeite ich.</p>
@@ -1017,7 +1033,7 @@
 
     <footer class="footer">
       <span class="footer__brand">
-        <svg class="ginkgo-icon" viewBox="0 0 100 120" aria-hidden="true"><use href="#ginkgo-leaf"/></svg>
+        <svg class="ginkgo-icon" viewBox="0 0 100 148" aria-hidden="true"><use href="#ginkgo-leaf"/></svg>
         Alena Lizier · Tattoo &amp; Art
       </span>
       <span>&copy; 2026</span>
@@ -1043,210 +1059,10 @@
     </div>
   </div>
 
-  <script>
-    // ─── WORK DATA (PMU & Tattoo gleichwertig) ───
-    const works = [
-      {
-        name: 'Powder Brows',
-        type: 'pmu',
-        typeLabel: 'Permanent Make-up',
-        images: [
-          'https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=900&q=80',
-          'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=900&q=80',
-        ],
-      },
-      {
-        name: 'Lip Blush',
-        type: 'pmu',
-        typeLabel: 'Permanent Make-up',
-        images: [
-          'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=900&q=80',
-          'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=900&q=80',
-        ],
-      },
-      {
-        name: 'Wimpernkranz',
-        type: 'pmu',
-        typeLabel: 'Permanent Make-up',
-        images: [
-          'https://images.unsplash.com/photo-1583001378847-14197e3db9ed?w=900&q=80',
-        ],
-      },
-      {
-        name: 'Fine Line Florals',
-        type: 'tattoo',
-        typeLabel: 'Fine Line Tattoo',
-        images: [
-          'https://images.unsplash.com/photo-1590246815117-0b8925b6860e?w=900&q=80',
-          'https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=900&q=80',
-        ],
-      },
-      {
-        name: 'Botanical Sleeve',
-        type: 'tattoo',
-        typeLabel: 'Fine Line Tattoo',
-        images: [
-          'https://images.unsplash.com/photo-1562962230-16e4623d36e6?w=900&q=80',
-          'https://images.unsplash.com/photo-1574169208507-84376144848b?w=900&q=80',
-          'https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=900&q=80',
-        ],
-      },
-      {
-        name: 'Minimal Script',
-        type: 'tattoo',
-        typeLabel: 'Fine Line Tattoo',
-        images: [
-          'https://images.unsplash.com/photo-1598371839696-5c5bb1d9243c?w=900&q=80',
-        ],
-      },
-    ];
-
-    // ─── RENDER WORK LIST ───
-    const workList = document.getElementById('work-list');
-    works.forEach((work, i) => {
-      const num = String(i + 1).padStart(2, '0');
-      const n = work.images.length;
-      const li = document.createElement('li');
-      li.className = 'work-item';
-      li.dataset.index = i;
-      li.innerHTML = `
-        <span class="work-item__num">${num}</span>
-        <div class="work-item__main">
-          <h3 class="work-item__name">${work.name}</h3>
-          <span class="work-item__type">${work.typeLabel}</span>
-        </div>
-        <span class="work-item__count">${n} ${n === 1 ? 'Bild' : 'Bilder'}</span>
-        <div class="work-item__preview" aria-hidden="true">
-          <img src="${work.images[0]}" alt="">
-        </div>
-      `;
-      li.addEventListener('click', () => openLightbox(i, 0));
-      workList.appendChild(li);
-    });
-
-    // ─── LIGHTBOX ───
-    const lightbox = document.getElementById('lightbox');
-    const lightboxTitle = document.getElementById('lightbox-title');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const lightboxCounter = document.getElementById('lightbox-counter');
-    const lightboxClose = document.getElementById('lightbox-close');
-    const lightboxPrev = document.getElementById('lightbox-prev');
-    const lightboxNext = document.getElementById('lightbox-next');
-
-    let currentWork = 0;
-    let currentImg = 0;
-
-    function openLightbox(workIdx, imgIdx) {
-      currentWork = workIdx;
-      currentImg = imgIdx;
-      updateLightbox();
-      lightbox.classList.add('is-open');
-      lightbox.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeLightbox() {
-      lightbox.classList.remove('is-open');
-      lightbox.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-    }
-
-    function updateLightbox() {
-      const work = works[currentWork];
-      lightboxTitle.textContent = work.name;
-      lightboxImg.src = work.images[currentImg];
-      lightboxImg.alt = `${work.name} — Bild ${currentImg + 1} von ${work.images.length}`;
-      lightboxCounter.textContent = `${currentImg + 1} von ${work.images.length}`;
-      lightboxPrev.style.visibility = currentImg > 0 ? 'visible' : 'hidden';
-      lightboxNext.style.visibility = currentImg < work.images.length - 1 ? 'visible' : 'hidden';
-    }
-
-    lightboxClose.addEventListener('click', closeLightbox);
-    lightboxPrev.addEventListener('click', () => { if (currentImg > 0) { currentImg--; updateLightbox(); } });
-    lightboxNext.addEventListener('click', () => { if (currentImg < works[currentWork].images.length - 1) { currentImg++; updateLightbox(); } });
-    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
-
-    document.addEventListener('keydown', (e) => {
-      if (!lightbox.classList.contains('is-open')) return;
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowLeft' && currentImg > 0) { currentImg--; updateLightbox(); }
-      if (e.key === 'ArrowRight' && currentImg < works[currentWork].images.length - 1) { currentImg++; updateLightbox(); }
-    });
-
-    // ─── HERO CAROUSEL ───
-    const slides = document.querySelectorAll('.hero__slide');
-    const heroCounter = document.getElementById('hero-counter');
-    let heroIndex = 0;
-    const heroTotal = slides.length;
-
-    function setHeroSlide(idx) {
-      heroIndex = (idx + heroTotal) % heroTotal;
-      slides.forEach((s, i) => s.classList.toggle('is-active', i === heroIndex));
-      heroCounter.textContent = `${String(heroIndex + 1).padStart(2, '0')} / ${String(heroTotal).padStart(2, '0')}`;
-    }
-
-    document.getElementById('hero-prev').addEventListener('click', () => setHeroSlide(heroIndex - 1));
-    document.getElementById('hero-next').addEventListener('click', () => setHeroSlide(heroIndex + 1));
-
-    let heroTimer = setInterval(() => setHeroSlide(heroIndex + 1), 6000);
-    document.querySelector('.hero__carousel').addEventListener('mouseenter', () => clearInterval(heroTimer));
-    document.querySelector('.hero__carousel').addEventListener('mouseleave', () => {
-      heroTimer = setInterval(() => setHeroSlide(heroIndex + 1), 6000);
-    });
-
-    // ─── MENU ───
-    const menuBtn = document.getElementById('menu-btn');
-    const menu = document.getElementById('menu');
-
-    function closeMenu() {
-      menu.classList.remove('is-open');
-      menu.setAttribute('aria-hidden', 'true');
-      menuBtn.classList.remove('is-open');
-      menuBtn.setAttribute('aria-expanded', 'false');
-      menuBtn.setAttribute('aria-label', 'Menü öffnen');
-      document.body.style.overflow = '';
-    }
-
-    function openMenu() {
-      menu.classList.add('is-open');
-      menu.setAttribute('aria-hidden', 'false');
-      menuBtn.classList.add('is-open');
-      menuBtn.setAttribute('aria-expanded', 'true');
-      menuBtn.setAttribute('aria-label', 'Menü schließen');
-      document.body.style.overflow = 'hidden';
-    }
-
-    menuBtn.addEventListener('click', () => {
-      menu.classList.contains('is-open') ? closeMenu() : openMenu();
-    });
-
-    menu.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', closeMenu);
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && menu.classList.contains('is-open')) closeMenu();
-    });
-
-    // Mirror text from data-mirror attribute
-    document.querySelectorAll('.menu-link').forEach((link) => {
-      const mirror = link.dataset.mirror;
-      if (mirror) link.querySelector('.menu-link__back').textContent = mirror;
-    });
-
-    // ─── SCROLL REVEAL ───
-    const revealEls = document.querySelectorAll('.reveal');
-    const revealObs = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          revealObs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
-    revealEls.forEach((el) => revealObs.observe(el));
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+  <script src="js/motion.js"></script>
+  <script src="js/app.js"></script>
 
 </body>
 </html>

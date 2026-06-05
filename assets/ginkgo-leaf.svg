@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 148" aria-hidden="true">
+  <!-- Ginkgo biloba — fan blade, biloba notch, radiating veins -->
+  <path fill="currentColor" fill-rule="evenodd" d="
+    M49 146
+    L47 120
+    C18 112 4 86 6 58
+    C8 30 28 8 50 4
+    C72 8 92 30 94 58
+    C96 86 82 112 53 120
+    L51 146
+    Z
+    M50 14
+    C47 14 45 18 45 22
+    C45 26 47 30 50 31
+    C53 30 55 26 55 22
+    C55 18 53 14 50 14
+    Z
+  "/>
+  <g fill="none" stroke="currentColor" stroke-width="0.75" stroke-linecap="round" opacity="0.32">
+    <path d="M50 118V52"/>
+    <path d="M50 118C36 98 24 78 20 54"/>
+    <path d="M50 118C64 98 76 78 80 54"/>
+    <path d="M50 118C40 92 34 66 32 40"/>
+    <path d="M50 118C60 92 66 66 68 40"/>
+    <path d="M50 118C44 78 42 48 44 24"/>
+    <path d="M50 118C56 78 58 48 56 24"/>
+  </g>
+</svg>
