@@ -1,911 +1,1251 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Alena Lizier — Tattoo Design Studio</title>
+  <meta name="description" content="Alena Lizier — Diplomierte Dermapigmentologin. Permanent Make-up und Fine Line Tattoo in harmonischem, klar gestaltetem Raum.">
+  <title>Alena Lizier — Tattoo &amp; Art</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&display=swap" rel="stylesheet">
   <style>
-    /* ─── RESET & BASE ─── */
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    /* ─── FONTS ─── */
+    @font-face {
+      font-family: 'Lovepotion';
+      src: url('fonts/LovePotion-Regular.woff2') format('woff2'),
+           url('fonts/LovePotion-Regular.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
     }
 
-    :root {
-      --white: #F8F7F4;
-      --black: #0A0A0A;
-      --grey: #999;
-      --grey-light: #E0DDD8;
-      --grey-mid: #6B6B6B;
-      --accent: #0A0A0A;
-      --font-display: 'Instrument Serif', Georgia, serif;
-      --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+    @font-face {
+      font-family: 'Lovepotion';
+      src: url('fonts/LovePotion-Bold.woff2') format('woff2'),
+           url('fonts/LovePotion-Bold.woff') format('woff');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
     }
+
+    /* ─── TOKENS ─── */
+    :root {
+      --cream: #F6F2EB;
+      --cream-deep: #EDE6DA;
+      --ink: #1C2430;
+      --ink-soft: #3D4654;
+      --muted: #8A857C;
+      --ginkgo: #B8A078;
+      --ginkgo-light: #D4C4A0;
+      --sage: #8FA68E;
+      --blob: #E8DFD0;
+      --radius-sm: 20px;
+      --radius-md: 32px;
+      --radius-lg: 48px;
+      --radius-pill: 999px;
+      --font-display: 'Lovepotion', 'Fraunces', Georgia, serif;
+      --font-ui: 'Barlow Condensed', 'Helvetica Neue', sans-serif;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --section-pad: clamp(72px, 14vh, 160px);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     html {
       font-size: 16px;
+      scroll-behavior: smooth;
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
 
     body {
-      background: var(--white);
-      color: var(--black);
-      font-family: var(--font-mono);
+      font-family: var(--font-ui);
       font-weight: 300;
-      line-height: 1.6;
-      min-height: 100vh;
-      cursor: default;
+      background: var(--cream);
+      color: var(--ink);
+      line-height: 1.55;
       overflow-x: hidden;
     }
 
-    ::selection {
-      background: var(--black);
-      color: var(--white);
+    ::selection { background: var(--ink); color: var(--cream); }
+
+    img { display: block; max-width: 100%; }
+
+    a { color: inherit; text-decoration: none; }
+
+    button {
+      font: inherit;
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: inherit;
     }
 
-    /* ─── LAYOUT ─── */
-    .site-wrapper {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 clamp(24px, 4vw, 80px);
+    /* Grain */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9998;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
-    /* ─── HEADER ─── */
-    header {
-      padding-top: clamp(40px, 8vh, 100px);
-      padding-bottom: clamp(60px, 12vh, 160px);
+    /* Floating ginkgo leaves */
+    .ginkgo-float {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+      color: var(--ginkgo);
+      opacity: 0.07;
+    }
+
+    .ginkgo-float--1 { top: 8%; right: 6%; width: clamp(80px, 12vw, 140px); transform: rotate(18deg); }
+    .ginkgo-float--2 { bottom: 18%; left: 4%; width: clamp(60px, 9vw, 110px); transform: rotate(-32deg); }
+    .ginkgo-float--3 { top: 42%; left: 2%; width: clamp(48px, 7vw, 80px); transform: rotate(8deg); opacity: 0.05; }
+
+    .page { position: relative; z-index: 1; }
+
+    /* ─── GINKGO ICON ─── */
+    .ginkgo-icon { display: block; }
+
+    /* ─── NAV ─── */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: clamp(20px, 3vw, 36px) clamp(24px, 5vw, 64px);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .nav-logo .ginkgo-icon { width: 28px; height: 28px; color: var(--ginkgo); opacity: 0.9; }
+
+    .nav-menu-btn {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1px solid rgba(28, 36, 48, 0.18);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: background 0.35s var(--ease-out), border-color 0.35s;
+    }
+
+    .nav-menu-btn span {
+      display: block;
+      width: 16px;
+      height: 1px;
+      background: var(--ink);
+      transition: transform 0.35s var(--ease-out), opacity 0.35s;
+    }
+
+    .nav-menu-btn:hover { background: var(--cream-deep); border-color: var(--ink); }
+
+    .nav-menu-btn.is-open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-menu-btn.is-open span:nth-child(2) { opacity: 0; }
+    .nav-menu-btn.is-open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    /* ─── FULLSCREEN MENU (9to5 / Liron Moran) ─── */
+    .menu-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: var(--ink);
+      color: var(--cream);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(48px, 8vw, 120px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s var(--ease-out);
+    }
+
+    .menu-overlay.is-open { opacity: 1; pointer-events: all; }
+
+    .menu-overlay__num {
+      position: absolute;
+      bottom: clamp(32px, 6vw, 80px);
+      right: clamp(32px, 6vw, 80px);
+      font-family: var(--font-display);
+      font-size: clamp(4rem, 12vw, 9rem);
+      line-height: 1;
+      opacity: 0.08;
+      pointer-events: none;
+    }
+
+    .menu-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(8px, 2vh, 20px);
+    }
+
+    .menu-link {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 7vw, 5.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      perspective: 800px;
       position: relative;
     }
 
-    .artist-name {
+    .menu-link__inner {
+      display: inline-block;
+      position: relative;
+      transition: transform 0.55s var(--ease-out);
+      transform-style: preserve-3d;
+    }
+
+    .menu-link__front,
+    .menu-link__back {
+      display: inline-block;
+      backface-visibility: hidden;
+      transition: transform 0.55s var(--ease-out), opacity 0.4s;
+    }
+
+    .menu-link__back {
+      position: absolute;
+      left: 0;
+      top: 0;
+      transform: rotateX(90deg);
+      opacity: 0;
+      color: var(--ginkgo-light);
+    }
+
+    .menu-link:hover .menu-link__front {
+      transform: rotateX(-90deg);
+      opacity: 0;
+    }
+
+    .menu-link:hover .menu-link__back {
+      transform: rotateX(0deg);
+      opacity: 1;
+    }
+
+    .menu-footer {
+      margin-top: auto;
+      padding-top: 48px;
+      display: flex;
+      gap: 24px;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(246, 242, 235, 0.45);
+    }
+
+    .menu-footer a:hover { color: var(--cream); }
+
+    /* ─── HERO (V&A Waterfront / Odd Ritual) ─── */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(100px, 16vh, 140px) clamp(24px, 5vw, 64px) clamp(48px, 8vh, 80px);
+      text-align: center;
+      position: relative;
+    }
+
+    .hero__chapter {
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: clamp(32px, 5vh, 56px);
+    }
+
+    .hero__carousel {
+      position: relative;
+      width: min(78vw, 420px);
+      aspect-ratio: 1;
+      margin-bottom: clamp(36px, 6vh, 56px);
+    }
+
+    .hero__blob {
+      position: absolute;
+      inset: -8%;
+      background: var(--blob);
+      border-radius: 58% 42% 52% 48% / 48% 55% 45% 52%;
+      animation: blobMorph 14s ease-in-out infinite;
+    }
+
+    @keyframes blobMorph {
+      0%, 100% { border-radius: 58% 42% 52% 48% / 48% 55% 45% 52%; }
+      33% { border-radius: 45% 55% 48% 52% / 52% 42% 58% 48%; }
+      66% { border-radius: 52% 48% 42% 58% / 45% 52% 48% 55%; }
+    }
+
+    .hero__slides {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 58% 42% 52% 48% / 48% 55% 45% 52%;
+      overflow: hidden;
+    }
+
+    .hero__slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.9s var(--ease-out);
+    }
+
+    .hero__slide.is-active { opacity: 1; }
+
+    .hero__slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero__slide-ginkgo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, var(--cream-deep), var(--blob));
+    }
+
+    .hero__slide-ginkgo .ginkgo-icon {
+      width: 55%;
+      height: auto;
+      color: var(--ginkgo);
+      opacity: 0.55;
+    }
+
+    .hero__nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(24px, 5vw, 48px);
+      margin-top: 20px;
+    }
+
+    .hero__arrow {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(28, 36, 48, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    .hero__arrow:hover { background: var(--cream-deep); border-color: var(--ink); }
+
+    .hero__counter {
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+    }
+
+    .hero__eyebrow {
+      font-size: 0.68rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.6em;
+    }
+
+    .hero__title {
       font-family: var(--font-display);
-      font-size: clamp(3.5rem, 10vw, 9rem);
+      font-size: clamp(2.8rem, 9vw, 6.5rem);
       font-weight: 400;
-      line-height: 0.9;
-      letter-spacing: -0.03em;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
       margin-bottom: 0.15em;
     }
 
-    .artist-name em {
-      font-style: italic;
-      display: inline-block;
-      transform: translateX(0.05em);
-    }
-
-    .studio-label {
-      font-family: var(--font-mono);
-      font-size: clamp(0.65rem, 1vw, 0.8rem);
-      font-weight: 400;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: var(--grey);
-      margin-top: 1.5em;
-    }
-
-    .header-line {
-      display: block;
-      width: 100%;
-      height: 1px;
-      background: var(--black);
-      margin-top: clamp(40px, 6vh, 80px);
-      transform-origin: left;
-      animation: lineReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
-    }
-
-    /* ─── INDEX LIST ─── */
-    .index-section {
-      padding-bottom: clamp(80px, 15vh, 200px);
-    }
-
-    .index-header {
-      display: grid;
-      grid-template-columns: 80px 1fr 120px;
-      gap: 20px;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--grey-light);
-      margin-bottom: 0;
-      font-size: 0.7rem;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--grey);
-    }
-
-    .index-header span:last-child {
-      text-align: right;
-    }
-
-    .project-item {
-      display: grid;
-      grid-template-columns: 80px 1fr 120px;
-      gap: 20px;
-      padding: 18px 0;
-      border-bottom: 1px solid var(--grey-light);
-      cursor: pointer;
-      transition: background 0.25s ease, padding 0.25s ease;
-      position: relative;
-      text-decoration: none;
-      color: inherit;
-      opacity: 0;
-      transform: translateY(12px);
-      animation: itemReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-
-    .project-item:nth-child(2) { animation-delay: 0.8s; }
-    .project-item:nth-child(3) { animation-delay: 0.9s; }
-    .project-item:nth-child(4) { animation-delay: 1.0s; }
-    .project-item:nth-child(5) { animation-delay: 1.1s; }
-    .project-item:nth-child(6) { animation-delay: 1.2s; }
-    .project-item:nth-child(7) { animation-delay: 1.3s; }
-    .project-item:nth-child(8) { animation-delay: 1.4s; }
-    .project-item:nth-child(9) { animation-delay: 1.5s; }
-
-    .project-item:hover {
-      background: #E9FF70;
-      padding-left: 12px;
-      padding-right: 12px;
-    }
-
-    .project-date {
-      font-size: 0.75rem;
-      font-weight: 300;
-      color: var(--grey-mid);
-      transition: color 0.3s;
-      align-self: center;
-    }
-
-    .project-item:hover .project-date {
-      color: var(--black);
-    }
-
-    .project-name {
+    .hero__subtitle {
       font-family: var(--font-display);
-      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
-      font-weight: 400;
-      line-height: 1.2;
-      align-self: center;
-    }
-
-    .project-count {
-      font-size: 0.75rem;
+      font-size: clamp(1.4rem, 4vw, 2.6rem);
       font-weight: 300;
-      color: var(--grey-mid);
-      text-align: right;
-      transition: color 0.3s;
-      align-self: center;
+      font-style: italic;
+      color: var(--ink-soft);
+      margin-bottom: 1.2em;
     }
 
-    .project-item:hover .project-count {
-      color: var(--black);
+    .hero__services {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2em;
     }
+
+    .hero__cta {
+      display: inline-block;
+      padding: 14px 36px;
+      border: 1px solid var(--ink);
+      border-radius: var(--radius-pill);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: background 0.35s var(--ease-out), color 0.35s;
+    }
+
+    .hero__cta:hover { background: var(--ink); color: var(--cream); }
+
+    .hero__scroll {
+      position: absolute;
+      bottom: clamp(24px, 4vh, 48px);
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      animation: scrollPulse 2.4s ease-in-out infinite;
+    }
+
+    .hero__scroll::after {
+      content: '';
+      width: 1px;
+      height: 32px;
+      background: linear-gradient(var(--muted), transparent);
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+      50% { opacity: 1; transform: translateX(-50%) translateY(4px); }
+    }
+
+    /* ─── SECTIONS (Odd Ritual numbering) ─── */
+    .section {
+      padding: var(--section-pad) clamp(24px, 5vw, 64px);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      gap: clamp(16px, 3vw, 32px);
+      margin-bottom: clamp(40px, 7vh, 72px);
+    }
+
+    .section-num {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--ginkgo);
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    .section-kicker {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.4em;
+    }
+
+    /* Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── ABOUT (Meech213) ─── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: clamp(32px, 6vw, 80px);
+      align-items: center;
+    }
+
+    .about-portrait {
+      position: relative;
+    }
+
+    .about-portrait__frame {
+      border-radius: 62% 38% 55% 45% / 45% 52% 48% 55%;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+      background: var(--cream-deep);
+    }
+
+    .about-portrait__frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .about-portrait__ginkgo {
+      position: absolute;
+      bottom: -6%;
+      right: -4%;
+      width: clamp(64px, 12vw, 100px);
+      color: var(--ginkgo);
+      opacity: 0.35;
+    }
+
+    .about-text p {
+      font-size: clamp(0.95rem, 1.5vw, 1.08rem);
+      color: var(--ink-soft);
+      margin-bottom: 1.4em;
+      max-width: 38em;
+    }
+
+    .about-text p:first-of-type {
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 2.2vw, 1.55rem);
+      color: var(--ink);
+      line-height: 1.4;
+    }
+
+    .about-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 8px;
+      padding: 12px 22px;
+      background: var(--cream-deep);
+      border-radius: var(--radius-pill);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    .about-badge .ginkgo-icon { width: 18px; height: 18px; color: var(--ginkgo); }
+
+    /* ─── WORK (Emilie Aubry) ─── */
+    .work-list { list-style: none; }
+
+    .work-item {
+      display: grid;
+      grid-template-columns: 72px 1fr auto;
+      gap: clamp(16px, 3vw, 32px);
+      align-items: center;
+      padding: clamp(20px, 3vh, 28px) 0;
+      border-bottom: 1px solid rgba(28, 36, 48, 0.08);
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      transition: background 0.4s var(--ease-out), padding 0.4s var(--ease-out);
+      position: relative;
+    }
+
+    .work-item:first-child { border-top: 1px solid rgba(28, 36, 48, 0.08); }
+
+    .work-item:hover {
+      background: var(--cream-deep);
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    .work-item__num {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--ginkgo);
+    }
+
+    .work-item__main { min-width: 0; }
+
+    .work-item__name {
+      font-family: var(--font-display);
+      font-size: clamp(1.3rem, 3vw, 2rem);
+      line-height: 1.15;
+      margin-bottom: 0.25em;
+    }
+
+    .work-item__type {
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .work-item__count {
+      font-size: 0.72rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .work-item__preview {
+      position: absolute;
+      right: clamp(16px, 4vw, 48px);
+      top: 50%;
+      transform: translateY(-50%) scale(0.92);
+      width: clamp(100px, 14vw, 160px);
+      aspect-ratio: 3/4;
+      border-radius: 38% 62% 55% 45% / 52% 42% 58% 48%;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.45s var(--ease-out), transform 0.45s var(--ease-out);
+      box-shadow: 0 20px 50px rgba(28, 36, 48, 0.12);
+    }
+
+    .work-item:hover .work-item__preview {
+      opacity: 1;
+      transform: translateY(-50%) scale(1);
+    }
+
+    .work-item__preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ─── STUDIO ─── */
+    .studio-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: clamp(32px, 6vw, 72px);
+      align-items: start;
+    }
+
+    .studio-visual {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      aspect-ratio: 5/4;
+      background: var(--cream-deep);
+    }
+
+    .studio-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .studio-visual__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 50%, rgba(28, 36, 48, 0.35));
+    }
+
+    .studio-visual__ginkgo {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+      width: 64px;
+      color: var(--cream);
+      opacity: 0.7;
+    }
+
+    .studio-text p {
+      font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+      color: var(--ink-soft);
+      margin-bottom: 1.3em;
+      max-width: 34em;
+    }
+
+    .studio-pillars {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .studio-pillar {
+      padding: 10px 18px;
+      background: var(--cream-deep);
+      border-radius: var(--radius-pill);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    /* ─── CONTACT STRIP ─── */
+    .contact {
+      padding: var(--section-pad) clamp(24px, 5vw, 64px);
+      text-align: center;
+      border-top: 1px solid rgba(28, 36, 48, 0.08);
+    }
+
+    .contact__title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin-bottom: 0.5em;
+    }
+
+    .contact__text {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-bottom: 2em;
+      letter-spacing: 0.06em;
+    }
+
+    .contact__email {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      border-bottom: 1px solid var(--ginkgo);
+      padding-bottom: 4px;
+      transition: color 0.3s;
+    }
+
+    .contact__email:hover { color: var(--ginkgo); }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      padding: 28px clamp(24px, 5vw, 64px) 48px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    .footer__brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer__brand .ginkgo-icon { width: 14px; height: 14px; color: var(--ginkgo); opacity: 0.7; }
 
     /* ─── LIGHTBOX ─── */
-    .lightbox-overlay {
+    .lightbox {
       position: fixed;
       inset: 0;
-      background: rgba(10, 10, 10, 0.95);
-      z-index: 1000;
+      z-index: 300;
+      background: rgba(28, 36, 48, 0.94);
       display: flex;
       flex-direction: column;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: opacity 0.45s var(--ease-out);
     }
 
-    .lightbox-overlay.active {
-      opacity: 1;
-      pointer-events: all;
-    }
+    .lightbox.is-open { opacity: 1; pointer-events: all; }
 
-    .lightbox-header {
+    .lightbox__head {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 24px clamp(24px, 4vw, 80px);
-      color: var(--white);
+      padding: 24px clamp(24px, 5vw, 64px);
+      color: var(--cream);
     }
 
-    .lightbox-title {
+    .lightbox__title {
       font-family: var(--font-display);
-      font-size: clamp(1.2rem, 3vw, 2rem);
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
     }
 
-    .lightbox-close {
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
+    .lightbox__close {
+      padding: 10px 22px;
+      border: 1px solid rgba(246, 242, 235, 0.2);
+      border-radius: var(--radius-pill);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--grey);
-      background: none;
-      border: 1px solid rgba(255,255,255,0.15);
-      padding: 10px 20px;
-      cursor: pointer;
-      transition: all 0.3s;
+      color: rgba(246, 242, 235, 0.6);
+      transition: border-color 0.3s, color 0.3s;
     }
 
-    .lightbox-close:hover {
-      color: var(--white);
-      border-color: var(--white);
-    }
+    .lightbox__close:hover { border-color: var(--cream); color: var(--cream); }
 
-    .lightbox-body {
+    .lightbox__body {
       flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0 clamp(24px, 4vw, 80px) 60px;
+      padding: 0 clamp(24px, 5vw, 64px) 48px;
       position: relative;
     }
 
-    .lightbox-image-wrapper {
-      max-width: 900px;
+    .lightbox__img-wrap {
+      max-width: 880px;
       width: 100%;
-      position: relative;
+      border-radius: var(--radius-md);
+      overflow: hidden;
     }
 
-    .lightbox-image {
+    .lightbox__img {
       width: 100%;
-      height: auto;
-      max-height: 70vh;
+      max-height: 72vh;
       object-fit: contain;
       display: block;
       margin: 0 auto;
-      border-radius: 2px;
     }
 
-    .lightbox-nav {
+    .lightbox__nav {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: none;
-      border: 1px solid rgba(255,255,255,0.2);
-      color: var(--white);
       width: 48px;
       height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-family: var(--font-mono);
-      font-size: 1.2rem;
-      transition: all 0.3s;
+      border-radius: 50%;
+      border: 1px solid rgba(246, 242, 235, 0.2);
+      color: var(--cream);
+      font-size: 1.1rem;
+      transition: background 0.3s;
     }
 
-    .lightbox-nav:hover {
-      background: var(--white);
-      color: var(--black);
-    }
+    .lightbox__nav:hover { background: rgba(246, 242, 235, 0.1); }
+    .lightbox__nav--prev { left: clamp(12px, 3vw, 40px); }
+    .lightbox__nav--next { right: clamp(12px, 3vw, 40px); }
 
-    .lightbox-prev { left: -70px; }
-    .lightbox-next { right: -70px; }
-
-    .lightbox-counter {
+    .lightbox__counter {
       text-align: center;
-      color: var(--grey);
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      margin-top: 20px;
-    }
-
-    /* ─── TATTOO MODE ─── */
-    .tattoo-toggle {
-      position: fixed;
-      bottom: 32px;
-      right: 32px;
-      z-index: 900;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: none;
-      color: var(--black);
-      border: none;
-      padding: 16px 26px;
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .tattoo-toggle svg.hand-drawn-border {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-    }
-
-    .tattoo-toggle svg.hand-drawn-border rect {
-      fill: none;
-      stroke: var(--black);
-      stroke-width: 1.5;
-      stroke-dasharray: 400;
-      stroke-dashoffset: 0;
-      rx: 3;
-      ry: 3;
-      transition: stroke 0.3s;
-    }
-
-    .tattoo-toggle:hover svg.hand-drawn-border rect {
-      animation: borderSketch 0.6s ease forwards;
-    }
-
-    .tattoo-toggle .needle-icon {
-      width: 18px;
-      height: 18px;
-      flex-shrink: 0;
-      transition: transform 0.3s ease;
-    }
-
-    .tattoo-toggle:hover .needle-icon {
-      transform: translateY(-1px) rotate(-8deg);
-    }
-
-    .tattoo-toggle.active {
-      color: var(--white);
-    }
-
-    .tattoo-toggle.active svg.hand-drawn-border rect {
-      fill: var(--black);
-      stroke: var(--black);
-    }
-
-    .tattoo-toggle.active .needle-icon path,
-    .tattoo-toggle.active .needle-icon line,
-    .tattoo-toggle.active .needle-icon circle {
-      stroke: var(--white);
-    }
-
-    .tattoo-toggle.active:hover .needle-icon {
-      animation: needleBuzz 0.15s linear infinite;
-    }
-
-    /* Ink splatter on hover */
-    .tattoo-toggle .ink-splatter {
-      position: absolute;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--black);
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .tattoo-toggle:hover .ink-splatter {
-      animation: splatAppear 0.4s ease forwards;
-    }
-
-    .tattoo-toggle .ink-splatter:nth-child(1) { top: -4px; right: 20px; animation-delay: 0.05s; }
-    .tattoo-toggle .ink-splatter:nth-child(2) { bottom: -3px; left: 15px; width: 4px; height: 4px; animation-delay: 0.15s; }
-    .tattoo-toggle .ink-splatter:nth-child(3) { top: 6px; left: -3px; width: 3px; height: 3px; animation-delay: 0.1s; }
-
-    .tattoo-toggle:hover .ink-splatter:nth-child(1) { animation: splatAppear 0.4s 0.05s ease forwards; }
-    .tattoo-toggle:hover .ink-splatter:nth-child(2) { animation: splatAppear 0.4s 0.15s ease forwards; }
-    .tattoo-toggle:hover .ink-splatter:nth-child(3) { animation: splatAppear 0.4s 0.1s ease forwards; }
-
-    @keyframes splatAppear {
-      0% { opacity: 0; transform: scale(0); }
-      60% { opacity: 1; transform: scale(1.4); }
-      100% { opacity: 0.7; transform: scale(1); }
-    }
-
-    @keyframes needleBuzz {
-      0%, 100% { transform: translate(0, -1px) rotate(-8deg); }
-      25% { transform: translate(0.5px, -1.5px) rotate(-7deg); }
-      50% { transform: translate(-0.5px, -0.5px) rotate(-9deg); }
-      75% { transform: translate(0.3px, -1.2px) rotate(-8deg); }
-    }
-
-    @keyframes borderSketch {
-      0% { stroke-dashoffset: 0; }
-      50% { stroke-dashoffset: 15; }
-      100% { stroke-dashoffset: 0; }
-    }
-
-    .tattoo-controls {
-      position: fixed;
-      bottom: 32px;
-      right: 200px;
-      z-index: 900;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      opacity: 0;
-      transform: translateX(20px);
-      pointer-events: none;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .tattoo-controls.visible {
-      opacity: 1;
-      transform: translateX(0);
-      pointer-events: all;
-    }
-
-    .color-picker-wrapper {
-      position: relative;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 2px solid var(--black);
-      cursor: pointer;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-
-    .color-picker-wrapper input[type="color"] {
-      position: absolute;
-      width: 150%;
-      height: 150%;
-      top: -25%;
-      left: -25%;
-      border: none;
-      cursor: pointer;
-    }
-
-    .stroke-size {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: white;
-      padding: 8px 16px;
-      border: 1px solid var(--grey-light);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    }
-
-    .stroke-size label {
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--grey);
-    }
-
-    .stroke-size input[type="range"] {
-      width: 60px;
-      accent-color: var(--black);
-    }
-
-    .clear-canvas-btn {
-      background: white;
-      border: 1px solid var(--grey-light);
-      padding: 8px 16px;
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--grey-mid);
-      cursor: pointer;
-      transition: all 0.3s;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    }
-
-    .clear-canvas-btn:hover {
-      color: var(--black);
-      border-color: var(--black);
-    }
-
-    /* Drawing canvas */
-    #tattoo-canvas {
-      position: fixed;
-      inset: 0;
-      z-index: 800;
-      pointer-events: none;
-      cursor: crosshair;
-      mix-blend-mode: multiply;
-    }
-
-    #tattoo-canvas.active {
-      pointer-events: all;
-    }
-
-    /* ─── FOOTER ─── */
-    footer {
-      border-top: 1px solid var(--black);
-      padding: 24px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.7rem;
-      color: var(--grey);
-      letter-spacing: 0.05em;
-      margin-bottom: 100px;
-    }
-
-    footer a {
-      color: var(--grey-mid);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    footer a:hover {
-      color: var(--black);
-    }
-
-    /* ─── ANIMATIONS ─── */
-    @keyframes lineReveal {
-      from { transform: scaleX(0); }
-      to { transform: scaleX(1); }
-    }
-
-    @keyframes itemReveal {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
-
-    .fade-in {
-      opacity: 0;
-      animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
-    }
-
-    .fade-in-delay {
-      opacity: 0;
-      animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
+      margin-top: 16px;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      color: rgba(246, 242, 235, 0.45);
     }
 
     /* ─── RESPONSIVE ─── */
-    @media (max-width: 768px) {
-      .index-header,
-      .project-item {
-        grid-template-columns: 60px 1fr 60px;
-        gap: 12px;
+    @media (max-width: 900px) {
+      .about-grid,
+      .studio-grid {
+        grid-template-columns: 1fr;
       }
 
-      .lightbox-prev { left: 10px; }
-      .lightbox-next { right: 10px; }
+      .about-portrait { max-width: 400px; margin: 0 auto; }
 
-      .tattoo-controls {
-        bottom: 90px;
-        right: 32px;
-        flex-wrap: wrap;
+      .work-item__preview { display: none; }
+
+      .work-item {
+        grid-template-columns: 48px 1fr;
       }
+
+      .work-item__count {
+        grid-column: 2;
+        text-align: left;
+        margin-top: -8px;
+        padding-bottom: 4px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .menu-footer { flex-direction: column; gap: 12px; }
+      .hero__carousel { width: min(88vw, 360px); }
     }
   </style>
 </head>
 <body>
 
-  <!-- ─── DRAWING CANVAS ─── -->
-  <canvas id="tattoo-canvas"></canvas>
+  <svg width="0" height="0" aria-hidden="true">
+    <defs>
+      <symbol id="ginkgo-leaf" viewBox="0 0 100 120">
+        <path fill="currentColor" d="M50 6 C36 20 32 38 36 54 C24 62 16 78 18 94 C20 106 34 114 50 116 C66 114 80 106 82 94 C84 78 76 62 64 54 C68 38 64 20 50 6 Z"/>
+        <path fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" d="M50 116 L50 62 M50 62 C40 54 34 42 32 30 M50 62 C60 54 66 42 68 30 M50 62 C44 74 40 86 38 98 M50 62 C56 74 60 86 62 98"/>
+      </symbol>
+    </defs>
+  </svg>
 
-  <!-- ─── MAIN CONTENT ─── -->
-  <div class="site-wrapper">
+  <!-- Ginkgo watermark leaves -->
+  <svg class="ginkgo-float ginkgo-float--1 ginkgo-icon" viewBox="0 0 100 120" aria-hidden="true"><use href="#ginkgo-leaf"/></svg>
+  <svg class="ginkgo-float ginkgo-float--2 ginkgo-icon" viewBox="0 0 100 120" aria-hidden="true"><use href="#ginkgo-leaf"/></svg>
+  <svg class="ginkgo-float ginkgo-float--3 ginkgo-icon" viewBox="0 0 100 120" aria-hidden="true"><use href="#ginkgo-leaf"/></svg>
 
-    <header>
-      <h1 class="artist-name fade-in">Alena<br><em>Lizier</em></h1>
-      <p class="studio-label fade-in-delay">Tattoo Design Studio</p>
-      <span class="header-line"></span>
-    </header>
+  <div class="page">
 
-    <section class="index-section">
-      <div class="index-header">
-        <span>Date</span>
-        <span>Project</span>
-        <span>Images</span>
+    <!-- NAV -->
+    <nav class="nav">
+      <a href="#" class="nav-logo">
+        <svg class="ginkgo-icon" viewBox="0 0 100 120" aria-hidden="true"><use href="#ginkgo-leaf"/></svg>
+        <span>Alena Lizier</span>
+      </a>
+      <button type="button" class="nav-menu-btn" id="menu-btn" aria-label="Menü öffnen" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <!-- MENU -->
+    <div class="menu-overlay" id="menu" aria-hidden="true">
+      <span class="menu-overlay__num" aria-hidden="true">02</span>
+      <ul class="menu-links">
+        <li><a href="#arbeiten" class="menu-link" data-mirror="nehtiarbA"><span class="menu-link__inner"><span class="menu-link__front">Arbeiten</span><span class="menu-link__back" aria-hidden="true">nehtiarbA</span></span></a></li>
+        <li><a href="#ueber-mich" class="menu-link" data-mirror="hciM rebeÜ"><span class="menu-link__inner"><span class="menu-link__front">Über mich</span><span class="menu-link__back" aria-hidden="true">hciM rebeÜ</span></span></a></li>
+        <li><a href="#studio" class="menu-link" data-mirror="oidutS"><span class="menu-link__inner"><span class="menu-link__front">Studio</span><span class="menu-link__back" aria-hidden="true">oidutS</span></span></a></li>
+        <li><a href="#kontakt" class="menu-link" data-mirror="taktnoK"><span class="menu-link__inner"><span class="menu-link__front">Kontakt</span><span class="menu-link__back" aria-hidden="true">taktnoK</span></span></a></li>
+      </ul>
+      <div class="menu-footer">
+        <a href="mailto:studio@alenalizier.com">E-Mail</a>
+        <a href="#" aria-label="Instagram">Instagram</a>
+      </div>
+    </div>
+
+    <!-- 01 HERO -->
+    <section class="hero" id="start">
+      <p class="hero__chapter">01 — Willkommen</p>
+
+      <div class="hero__carousel" aria-roledescription="Karussell">
+        <div class="hero__blob" aria-hidden="true"></div>
+        <div class="hero__slides">
+          <div class="hero__slide hero__slide-ginkgo is-active" data-slide="0">
+            <svg class="ginkgo-icon" viewBox="0 0 100 120" aria-hidden="true"><use href="#ginkgo-leaf"/></svg>
+          </div>
+          <div class="hero__slide" data-slide="1">
+            <img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=800&q=80" alt="Permanent Make-up — Platzhalter">
+          </div>
+          <div class="hero__slide" data-slide="2">
+            <img src="https://images.unsplash.com/photo-1590246815117-0b8925b6860e?w=800&q=80" alt="Fine Line Tattoo — Platzhalter">
+          </div>
+        </div>
       </div>
 
-      <div class="project-list" id="project-list">
-        <!-- Populated by JS -->
+      <div class="hero__nav">
+        <button type="button" class="hero__arrow" id="hero-prev" aria-label="Vorheriges Bild">&larr;</button>
+        <span class="hero__counter" id="hero-counter">01 / 03</span>
+        <button type="button" class="hero__arrow" id="hero-next" aria-label="Nächstes Bild">&rarr;</button>
+      </div>
+
+      <p class="hero__eyebrow">Diplomierte Dermapigmentologin</p>
+      <h1 class="hero__title">Alena Lizier</h1>
+      <p class="hero__subtitle">Tattoo &amp; Art</p>
+      <p class="hero__services">Permanent Make-up · Fine Line Tattoo</p>
+      <a href="#arbeiten" class="hero__cta">Entdecken</a>
+
+      <p class="hero__scroll" aria-hidden="true">Scroll</p>
+    </section>
+
+    <!-- 02 ÜBER MICH -->
+    <section class="section" id="ueber-mich">
+      <div class="section-head reveal">
+        <span class="section-num">02</span>
+        <div>
+          <h2 class="section-title">Über mich</h2>
+          <p class="section-kicker">Präzision mit Herz</p>
+        </div>
+      </div>
+
+      <div class="about-grid reveal">
+        <div class="about-portrait">
+          <div class="about-portrait__frame">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&q=80" alt="Alena Lizier — Portrait (Platzhalter)">
+          </div>
+          <svg class="about-portrait__ginkgo ginkgo-icon" viewBox="0 0 100 120" aria-hidden="true"><use href="#ginkgo-leaf"/></svg>
+        </div>
+        <div class="about-text">
+          <p>Schon früh habe ich in jedem Detail nach Klarheit gesucht — heute fließt das in meine Arbeit als diplomierte Dermapigmentologin.</p>
+          <p>Jede Behandlung beginnt mit einer ruhigen Beratung: Wir schauen gemeinsam, was zu Ihren Gesichtszügen passt — ob Permanent Make-up oder Fine Line Tattoo. Beides mit derselben Sorgfalt, derselben Präzision.</p>
+          <p>Perfektion bedeutet für mich nicht Kälte, sondern Verlässlichkeit: klare Linien, harmonische Farben, ein Ergebnis, das sich natürlich anfühlt.</p>
+          <div class="about-badge">
+            <svg class="ginkgo-icon" viewBox="0 0 100 120" aria-hidden="true"><use href="#ginkgo-leaf"/></svg>
+            Diplomierte Dermapigmentologin
+          </div>
+        </div>
       </div>
     </section>
 
-    <footer>
-      <span>&copy; 2026 Alena Lizier</span>
-      <a href="mailto:studio@alenalizier.com">studio@alenalizier.com</a>
+    <!-- 03 ARBEITEN -->
+    <section class="section" id="arbeiten">
+      <div class="section-head reveal">
+        <span class="section-num">03</span>
+        <div>
+          <h2 class="section-title">Arbeiten</h2>
+          <p class="section-kicker">Permanent Make-up &amp; Tattoo — gleichwertig, gleich präzise</p>
+        </div>
+      </div>
+
+      <ul class="work-list reveal" id="work-list"></ul>
+    </section>
+
+    <!-- 04 STUDIO -->
+    <section class="section" id="studio">
+      <div class="section-head reveal">
+        <span class="section-num">04</span>
+        <div>
+          <h2 class="section-title">Studio &amp; Ginkgo</h2>
+          <p class="section-kicker">Feng Shui — weniger ist mehr</p>
+        </div>
+      </div>
+
+      <div class="studio-grid reveal">
+        <div class="studio-visual">
+          <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=900&q=80" alt="Ginkgo-Bäume — Platzhalter bis echte Fotos da sind">
+          <div class="studio-visual__overlay" aria-hidden="true"></div>
+          <svg class="studio-visual__ginkgo ginkgo-icon" viewBox="0 0 100 120" aria-hidden="true"><use href="#ginkgo-leaf"/></svg>
+        </div>
+        <div class="studio-text">
+          <p>Vor meinem Studio stehen zwei Ginkgos — einer der ältesten Bäume der Welt. Sie stehen für Beständigkeit, Klarheit und Ruhe. Genau damit arbeite ich.</p>
+          <p>Der Raum ist bewusst aufgebaut: keine harten Kanten, weiche Formen, viel Licht. Energie soll fließen — damit Sie sich vom ersten Moment an wohlfühlen.</p>
+          <p>Das Ginkgo-Blatt begleitet meine Arbeit als Symbol: einzigartig in der Form, klar in der Struktur, zeitlos in der Wirkung.</p>
+          <div class="studio-pillars">
+            <span class="studio-pillar">Klarheit</span>
+            <span class="studio-pillar">Balance</span>
+            <span class="studio-pillar">Beständigkeit</span>
+            <span class="studio-pillar">Ruhe</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KONTAKT -->
+    <section class="contact" id="kontakt">
+      <h2 class="contact__title reveal">Termin &amp; Anfrage</h2>
+      <p class="contact__text reveal">Schreiben Sie mir — ich melde mich persönlich zurück.</p>
+      <a href="mailto:studio@alenalizier.com" class="contact__email reveal">studio@alenalizier.com</a>
+    </section>
+
+    <footer class="footer">
+      <span class="footer__brand">
+        <svg class="ginkgo-icon" viewBox="0 0 100 120" aria-hidden="true"><use href="#ginkgo-leaf"/></svg>
+        Alena Lizier · Tattoo &amp; Art
+      </span>
+      <span>&copy; 2026</span>
     </footer>
 
   </div>
 
-  <!-- ─── LIGHTBOX ─── -->
-  <div class="lightbox-overlay" id="lightbox">
-    <div class="lightbox-header">
-      <span class="lightbox-title" id="lightbox-title"></span>
-      <button class="lightbox-close" id="lightbox-close">Close &times;</button>
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="lightbox__head">
+      <span class="lightbox__title" id="lightbox-title"></span>
+      <button type="button" class="lightbox__close" id="lightbox-close">Schließen</button>
     </div>
-    <div class="lightbox-body">
-      <button class="lightbox-nav lightbox-prev" id="lightbox-prev">&larr;</button>
-      <div class="lightbox-image-wrapper">
-        <img class="lightbox-image" id="lightbox-image" src="" alt="">
-        <p class="lightbox-counter" id="lightbox-counter"></p>
+    <div class="lightbox__body">
+      <button type="button" class="lightbox__nav lightbox__nav--prev" id="lightbox-prev" aria-label="Vorheriges Bild">&larr;</button>
+      <div>
+        <div class="lightbox__img-wrap">
+          <img class="lightbox__img" id="lightbox-img" src="" alt="">
+        </div>
+        <p class="lightbox__counter" id="lightbox-counter"></p>
       </div>
-      <button class="lightbox-nav lightbox-next" id="lightbox-next">&rarr;</button>
+      <button type="button" class="lightbox__nav lightbox__nav--next" id="lightbox-next" aria-label="Nächstes Bild">&rarr;</button>
     </div>
   </div>
-
-  <!-- ─── TATTOO CONTROLS ─── -->
-  <div class="tattoo-controls" id="tattoo-controls">
-    <div class="color-picker-wrapper">
-      <input type="color" id="ink-color" value="#0A0A0A" title="Ink color">
-    </div>
-    <div class="stroke-size">
-      <label>Size</label>
-      <input type="range" id="stroke-size" min="0.5" max="6" step="0.5" value="1.5">
-    </div>
-    <button class="clear-canvas-btn" id="clear-canvas">Clear</button>
-  </div>
-
-  <button class="tattoo-toggle" id="tattoo-toggle">
-    <svg class="hand-drawn-border" viewBox="0 0 100 100" preserveAspectRatio="none"><rect x="2" y="2" width="96" height="96" pathLength="400" vector-effect="non-scaling-stroke"/></svg>
-    <span class="ink-splatter"></span>
-    <span class="ink-splatter"></span>
-    <span class="ink-splatter"></span>
-    <svg class="needle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <!-- Tattoo needle -->
-      <line x1="4" y1="20" x2="14" y2="10"/>
-      <line x1="14" y1="10" x2="20" y2="4"/>
-      <circle cx="20" cy="4" r="1.5"/>
-      <!-- Ink drops -->
-      <circle cx="3" cy="21" r="0.8" fill="currentColor" stroke="none"/>
-      <circle cx="5.5" cy="21.5" r="0.5" fill="currentColor" stroke="none"/>
-    </svg>
-    Tattoo
-  </button>
 
   <script>
-    // ─── PROJECT DATA ─── //
-    const projects = [
+    // ─── WORK DATA (PMU & Tattoo gleichwertig) ───
+    const works = [
       {
-        date: '2026.01',
-        name: 'Serpentine Bloom',
+        name: 'Powder Brows',
+        type: 'pmu',
+        typeLabel: 'Permanent Make-up',
         images: [
-          'https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=800&q=80',
-          'https://images.unsplash.com/photo-1590246815117-0b8925b6860e?w=800&q=80',
-          'https://images.unsplash.com/photo-1562962230-16e4623d36e6?w=800&q=80',
-        ]
+          'https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=900&q=80',
+          'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=900&q=80',
+        ],
       },
       {
-        date: '2025.11',
-        name: 'Meridian Lines',
+        name: 'Lip Blush',
+        type: 'pmu',
+        typeLabel: 'Permanent Make-up',
         images: [
-          'https://images.unsplash.com/photo-1598371839696-5c5bb1d9243c?w=800&q=80',
-          'https://images.unsplash.com/photo-1565058379802-bbe93b2f703a?w=800&q=80',
-        ]
+          'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=900&q=80',
+          'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=900&q=80',
+        ],
       },
       {
-        date: '2025.09',
-        name: 'Ossuary Studies',
+        name: 'Wimpernkranz',
+        type: 'pmu',
+        typeLabel: 'Permanent Make-up',
         images: [
-          'https://images.unsplash.com/photo-1568515045052-f9a854d70bfd?w=800&q=80',
-          'https://images.unsplash.com/photo-1590246814883-57c511e9e6f0?w=800&q=80',
-          'https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?w=800&q=80',
-          'https://images.unsplash.com/photo-1509281373149-e957c6296406?w=800&q=80',
-        ]
+          'https://images.unsplash.com/photo-1583001378847-14197e3db9ed?w=900&q=80',
+        ],
       },
       {
-        date: '2025.07',
-        name: 'Tidal Geometry',
+        name: 'Fine Line Florals',
+        type: 'tattoo',
+        typeLabel: 'Fine Line Tattoo',
         images: [
-          'https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=800&q=80',
-          'https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=800&q=80',
-        ]
+          'https://images.unsplash.com/photo-1590246815117-0b8925b6860e?w=900&q=80',
+          'https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=900&q=80',
+        ],
       },
       {
-        date: '2025.04',
-        name: 'Phantom Limbs',
+        name: 'Botanical Sleeve',
+        type: 'tattoo',
+        typeLabel: 'Fine Line Tattoo',
         images: [
-          'https://images.unsplash.com/photo-1578301978018-3005759f48f7?w=800&q=80',
-          'https://images.unsplash.com/photo-1549490349-8643362247b5?w=800&q=80',
-          'https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?w=800&q=80',
-        ]
+          'https://images.unsplash.com/photo-1562962230-16e4623d36e6?w=900&q=80',
+          'https://images.unsplash.com/photo-1574169208507-84376144848b?w=900&q=80',
+          'https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=900&q=80',
+        ],
       },
       {
-        date: '2025.02',
-        name: 'Nocturne in Skin',
+        name: 'Minimal Script',
+        type: 'tattoo',
+        typeLabel: 'Fine Line Tattoo',
         images: [
-          'https://images.unsplash.com/photo-1617791160505-6f00504e3519?w=800&q=80',
-        ]
-      },
-      {
-        date: '2024.12',
-        name: 'Cartography of Scars',
-        images: [
-          'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800&q=80',
-          'https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&q=80',
-          'https://images.unsplash.com/photo-1547891654-e66ed7ebb968?w=800&q=80',
-          'https://images.unsplash.com/photo-1482160549825-59d1b23cb208?w=800&q=80',
-          'https://images.unsplash.com/photo-1518640467707-6811f4a6ab73?w=800&q=80',
-        ]
-      },
-      {
-        date: '2024.09',
-        name: 'Vessel & Vine',
-        images: [
-          'https://images.unsplash.com/photo-1574169208507-84376144848b?w=800&q=80',
-          'https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=800&q=80',
-          'https://images.unsplash.com/photo-1553949345-eb786bb3f7ba?w=800&q=80',
-        ]
+          'https://images.unsplash.com/photo-1598371839696-5c5bb1d9243c?w=900&q=80',
+        ],
       },
     ];
 
-    // ─── RENDER PROJECT LIST ─── //
-    const projectList = document.getElementById('project-list');
-
-    projects.forEach((project, index) => {
-      const item = document.createElement('div');
-      item.className = 'project-item';
-      item.dataset.index = index;
-      item.innerHTML = `
-        <span class="project-date">${project.date}</span>
-        <span class="project-name">${project.name}</span>
-        <span class="project-count">${project.images.length} img${project.images.length !== 1 ? 's' : ''}</span>
+    // ─── RENDER WORK LIST ───
+    const workList = document.getElementById('work-list');
+    works.forEach((work, i) => {
+      const num = String(i + 1).padStart(2, '0');
+      const n = work.images.length;
+      const li = document.createElement('li');
+      li.className = 'work-item';
+      li.dataset.index = i;
+      li.innerHTML = `
+        <span class="work-item__num">${num}</span>
+        <div class="work-item__main">
+          <h3 class="work-item__name">${work.name}</h3>
+          <span class="work-item__type">${work.typeLabel}</span>
+        </div>
+        <span class="work-item__count">${n} ${n === 1 ? 'Bild' : 'Bilder'}</span>
+        <div class="work-item__preview" aria-hidden="true">
+          <img src="${work.images[0]}" alt="">
+        </div>
       `;
-      item.addEventListener('click', () => openLightbox(index, 0));
-      projectList.appendChild(item);
+      li.addEventListener('click', () => openLightbox(i, 0));
+      workList.appendChild(li);
     });
 
-    // ─── LIGHTBOX ─── //
+    // ─── LIGHTBOX ───
     const lightbox = document.getElementById('lightbox');
     const lightboxTitle = document.getElementById('lightbox-title');
-    const lightboxImage = document.getElementById('lightbox-image');
+    const lightboxImg = document.getElementById('lightbox-img');
     const lightboxCounter = document.getElementById('lightbox-counter');
     const lightboxClose = document.getElementById('lightbox-close');
     const lightboxPrev = document.getElementById('lightbox-prev');
     const lightboxNext = document.getElementById('lightbox-next');
 
-    let currentProject = 0;
-    let currentImage = 0;
+    let currentWork = 0;
+    let currentImg = 0;
 
-    function openLightbox(projectIdx, imageIdx) {
-      currentProject = projectIdx;
-      currentImage = imageIdx;
+    function openLightbox(workIdx, imgIdx) {
+      currentWork = workIdx;
+      currentImg = imgIdx;
       updateLightbox();
-      lightbox.classList.add('active');
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
     }
 
     function closeLightbox() {
-      lightbox.classList.remove('active');
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
     }
 
     function updateLightbox() {
-      const project = projects[currentProject];
-      lightboxTitle.textContent = project.name;
-      lightboxImage.src = project.images[currentImage];
-      lightboxImage.alt = `${project.name} — ${currentImage + 1}`;
-      lightboxCounter.textContent = `${currentImage + 1} / ${project.images.length}`;
-      lightboxPrev.style.visibility = currentImage > 0 ? 'visible' : 'hidden';
-      lightboxNext.style.visibility = currentImage < project.images.length - 1 ? 'visible' : 'hidden';
+      const work = works[currentWork];
+      lightboxTitle.textContent = work.name;
+      lightboxImg.src = work.images[currentImg];
+      lightboxImg.alt = `${work.name} — Bild ${currentImg + 1} von ${work.images.length}`;
+      lightboxCounter.textContent = `${currentImg + 1} von ${work.images.length}`;
+      lightboxPrev.style.visibility = currentImg > 0 ? 'visible' : 'hidden';
+      lightboxNext.style.visibility = currentImg < work.images.length - 1 ? 'visible' : 'hidden';
     }
 
     lightboxClose.addEventListener('click', closeLightbox);
-    lightboxPrev.addEventListener('click', () => {
-      if (currentImage > 0) { currentImage--; updateLightbox(); }
-    });
-    lightboxNext.addEventListener('click', () => {
-      if (currentImage < projects[currentProject].images.length - 1) { currentImage++; updateLightbox(); }
+    lightboxPrev.addEventListener('click', () => { if (currentImg > 0) { currentImg--; updateLightbox(); } });
+    lightboxNext.addEventListener('click', () => { if (currentImg < works[currentWork].images.length - 1) { currentImg++; updateLightbox(); } });
+    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('is-open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft' && currentImg > 0) { currentImg--; updateLightbox(); }
+      if (e.key === 'ArrowRight' && currentImg < works[currentWork].images.length - 1) { currentImg++; updateLightbox(); }
     });
 
-    lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox) closeLightbox();
+    // ─── HERO CAROUSEL ───
+    const slides = document.querySelectorAll('.hero__slide');
+    const heroCounter = document.getElementById('hero-counter');
+    let heroIndex = 0;
+    const heroTotal = slides.length;
+
+    function setHeroSlide(idx) {
+      heroIndex = (idx + heroTotal) % heroTotal;
+      slides.forEach((s, i) => s.classList.toggle('is-active', i === heroIndex));
+      heroCounter.textContent = `${String(heroIndex + 1).padStart(2, '0')} / ${String(heroTotal).padStart(2, '0')}`;
+    }
+
+    document.getElementById('hero-prev').addEventListener('click', () => setHeroSlide(heroIndex - 1));
+    document.getElementById('hero-next').addEventListener('click', () => setHeroSlide(heroIndex + 1));
+
+    let heroTimer = setInterval(() => setHeroSlide(heroIndex + 1), 6000);
+    document.querySelector('.hero__carousel').addEventListener('mouseenter', () => clearInterval(heroTimer));
+    document.querySelector('.hero__carousel').addEventListener('mouseleave', () => {
+      heroTimer = setInterval(() => setHeroSlide(heroIndex + 1), 6000);
+    });
+
+    // ─── MENU ───
+    const menuBtn = document.getElementById('menu-btn');
+    const menu = document.getElementById('menu');
+
+    function closeMenu() {
+      menu.classList.remove('is-open');
+      menu.setAttribute('aria-hidden', 'true');
+      menuBtn.classList.remove('is-open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+      menuBtn.setAttribute('aria-label', 'Menü öffnen');
+      document.body.style.overflow = '';
+    }
+
+    function openMenu() {
+      menu.classList.add('is-open');
+      menu.setAttribute('aria-hidden', 'false');
+      menuBtn.classList.add('is-open');
+      menuBtn.setAttribute('aria-expanded', 'true');
+      menuBtn.setAttribute('aria-label', 'Menü schließen');
+      document.body.style.overflow = 'hidden';
+    }
+
+    menuBtn.addEventListener('click', () => {
+      menu.classList.contains('is-open') ? closeMenu() : openMenu();
+    });
+
+    menu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', closeMenu);
     });
 
     document.addEventListener('keydown', (e) => {
-      if (!lightbox.classList.contains('active')) return;
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowLeft' && currentImage > 0) { currentImage--; updateLightbox(); }
-      if (e.key === 'ArrowRight' && currentImage < projects[currentProject].images.length - 1) { currentImage++; updateLightbox(); }
+      if (e.key === 'Escape' && menu.classList.contains('is-open')) closeMenu();
     });
 
-    // ─── TATTOO MODE (Canvas Drawing) ─── //
-    const canvas = document.getElementById('tattoo-canvas');
-    const ctx = canvas.getContext('2d');
-    const toggleBtn = document.getElementById('tattoo-toggle');
-    const controls = document.getElementById('tattoo-controls');
-    const colorPicker = document.getElementById('ink-color');
-    const sizeSlider = document.getElementById('stroke-size');
-    const clearBtn = document.getElementById('clear-canvas');
-
-    let tattooMode = false;
-    let isDrawing = false;
-    let lastX = 0;
-    let lastY = 0;
-    let lastTime = 0;
-
-    function resizeCanvas() {
-      // Preserve drawing when resizing
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      ctx.putImageData(imageData, 0, 0);
-    }
-
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    toggleBtn.addEventListener('click', () => {
-      tattooMode = !tattooMode;
-      canvas.classList.toggle('active', tattooMode);
-      toggleBtn.classList.toggle('active', tattooMode);
-      controls.classList.toggle('visible', tattooMode);
-      // Toggle active state
+    // Mirror text from data-mirror attribute
+    document.querySelectorAll('.menu-link').forEach((link) => {
+      const mirror = link.dataset.mirror;
+      if (mirror) link.querySelector('.menu-link__back').textContent = mirror;
     });
 
-    function getStrokeWidth(e) {
-      const baseSize = parseFloat(sizeSlider.value);
-      // Simulate pressure with speed
-      const now = Date.now();
-      const dt = now - lastTime;
-      const dx = e.clientX - lastX;
-      const dy = e.clientY - lastY;
-      const speed = Math.sqrt(dx * dx + dy * dy) / Math.max(dt, 1);
-      const pressure = Math.max(0.3, 1 - Math.min(speed / 8, 0.7));
-      return baseSize * pressure;
-    }
+    // ─── SCROLL REVEAL ───
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
-    function startDrawing(e) {
-      if (!tattooMode) return;
-      isDrawing = true;
-      lastX = e.clientX;
-      lastY = e.clientY;
-      lastTime = Date.now();
-
-      ctx.beginPath();
-      ctx.arc(e.clientX, e.clientY, parseFloat(sizeSlider.value) * 0.4, 0, Math.PI * 2);
-      ctx.fillStyle = colorPicker.value;
-      ctx.fill();
-    }
-
-    function draw(e) {
-      if (!isDrawing || !tattooMode) return;
-
-      const strokeWidth = getStrokeWidth(e);
-
-      ctx.beginPath();
-      ctx.moveTo(lastX, lastY);
-      ctx.lineTo(e.clientX, e.clientY);
-      ctx.strokeStyle = colorPicker.value;
-      ctx.lineWidth = strokeWidth;
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
-      ctx.stroke();
-
-      lastX = e.clientX;
-      lastY = e.clientY;
-      lastTime = Date.now();
-    }
-
-    function stopDrawing() {
-      isDrawing = false;
-    }
-
-    canvas.addEventListener('mousedown', startDrawing);
-    canvas.addEventListener('mousemove', draw);
-    canvas.addEventListener('mouseup', stopDrawing);
-    canvas.addEventListener('mouseleave', stopDrawing);
-
-    // Touch support
-    canvas.addEventListener('touchstart', (e) => {
-      e.preventDefault();
-      const touch = e.touches[0];
-      startDrawing({ clientX: touch.clientX, clientY: touch.clientY });
-    });
-    canvas.addEventListener('touchmove', (e) => {
-      e.preventDefault();
-      const touch = e.touches[0];
-      draw({ clientX: touch.clientX, clientY: touch.clientY });
-    });
-    canvas.addEventListener('touchend', stopDrawing);
-
-    clearBtn.addEventListener('click', () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    });
+    revealEls.forEach((el) => revealObs.observe(el));
   </script>
 
 </body>
